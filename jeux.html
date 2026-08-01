@@ -1,0 +1,297 @@
+<!doctype html>
+<html lang="fr" data-theme="noir" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Jeux &amp; Addiction — Atrocement Autiste</title>
+<meta name="description" content="Blackjack et autres jeux du groupe. 100% virtuel, addiction comprise.">
+<meta name="theme-color" content="#f8f8fa">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atrocement Autiste">
+<script>
+(function(){try{var t=localStorage.getItem('aa_theme')||'noir';var m=localStorage.getItem('aa_mode')||'light';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-mode',m);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="grid-fx"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="transition-overlay"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer le thème" aria-expanded="false">
+        <span class="icon-moon" data-icon="moon"></span>
+        <span class="icon-sun" data-icon="sun"></span>
+      </button>
+      <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
+          <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
+          <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+        </svg>
+      </a>
+    </div>
+    <a href="index.html" class="nav-center no-transition logo-word">Atrocement Autiste</a>
+    <button class="icon-btn burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="panel-backdrop" id="theme-backdrop"></div>
+<aside class="theme-panel" id="theme-panel" aria-label="Réglages du thème">
+  <div class="panel-head">
+    <span class="panel-logo" data-icon="sparkles"></span>
+    <h3>Apparence</h3>
+  </div>
+  <p>Choisis tes couleurs et ton mode (clair ou sombre).</p>
+  <div class="mode-switch">
+    <button data-mode="light"><span data-icon="sun"></span> Clair</button>
+    <button data-mode="dark"><span data-icon="moon"></span> Sombre</button>
+  </div>
+  <div class="theme-grid" id="theme-grid"></div>
+  <div class="nick-field">
+    <label for="nick-input">Ton pseudo</label>
+    <input class="input" type="text" id="nick-input" placeholder="Comment t'appelles-tu ?" autocomplete="off" maxlength="30">
+    <small>Utilisé pour signer tes posts, défis, etc.</small>
+  </div>
+</aside>
+
+<nav class="menu" id="menu" aria-label="Menu principal">
+  <span class="menu-eyebrow">Navigation</span>
+  <div class="menu-links">
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
+    <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
+    <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
+    <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
+    <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
+    <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
+    <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span>Sondages &amp; Votes</a></div>
+    <div class="menu-item"><a class="menu-link" href="jeux.html"><span class="idx">08</span><span class="grad">Jeux &amp; Addiction</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">09</span>Mentions légales</a></div>
+  </div>
+  <div class="menu-foot">
+    <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">08</span> Le jeu, c'est sérieux</span>
+      <h1 class="h2" data-reveal>Jeux &amp; <span class="grad">Addiction</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        Blackjack, machines à sous, ticket à gratter, roulette. 100% virtuel, 0€ engagé, addiction 100% garantie.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="grid">
+
+        <!-- CAGNOTTE COMMUNE -->
+        <div class="card wallet-card col-12" data-reveal>
+          <div class="wallet-inner">
+            <span class="card-icon" data-icon="lock"></span>
+            <div class="wallet-text">
+              <h3>Cagnotte commune</h3>
+              <p class="muted">Tous les jeux piochent dans le même solde. À toi de la faire fructifier… ou pas.</p>
+            </div>
+            <div class="wallet-amount">
+              <span>Crédits</span>
+              <strong class="wallet-num">1000</strong>
+            </div>
+            <button class="btn ghost sm" id="wallet-reset" type="button">Recharger à 1000</button>
+          </div>
+        </div>
+
+        <!-- BLACKJACK -->
+        <div class="card tool-card col-8" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="sparkles"></span>
+            <h3>Blackjack</h3>
+          </div>
+          <div class="tc-body">
+            <div class="bj-balance">
+              <span>Crédits</span>
+              <strong id="bj-balance">1000</strong>
+            </div>
+            <div class="bj-table">
+              <div class="bj-side">
+                <span class="bj-label">Croupier</span>
+                <div class="bj-hand" id="bj-dealer"></div>
+                <div class="bj-total" id="bj-dealer-total"></div>
+              </div>
+              <div class="bj-vs">VS</div>
+              <div class="bj-side">
+                <span class="bj-label">Toi</span>
+                <div class="bj-hand" id="bj-player"></div>
+                <div class="bj-total" id="bj-player-total"></div>
+              </div>
+            </div>
+            <div class="bj-status" id="bj-status">Distribue pour commencer.</div>
+            <div class="bj-bets">
+              <span class="bj-label">Mise</span>
+              <button class="btn sm ghost" id="bj-bet-minus" type="button" aria-label="Mise -5">−</button>
+              <strong id="bj-bet" class="bj-bet-num">10</strong>
+              <button class="btn sm ghost" id="bj-bet-plus" type="button" aria-label="Mise +5">+</button>
+              <div class="chips bj-chips">
+                <button class="chip-bet" data-bet="5">5</button>
+                <button class="chip-bet" data-bet="10">10</button>
+                <button class="chip-bet" data-bet="25">25</button>
+                <button class="chip-bet" data-bet="50">50</button>
+                <button class="chip-bet" data-bet="100">100</button>
+              </div>
+            </div>
+            <div class="bj-actions">
+              <button class="btn" id="bj-deal">Distribuer</button>
+              <button class="btn ghost" id="bj-hit" hidden>Prendre une carte</button>
+              <button class="btn ghost" id="bj-stand" hidden>Rester</button>
+              <button class="btn ghost" id="bj-double" hidden>Doubler</button>
+              <button class="btn" id="bj-again" hidden>Rejouer</button>
+            </div>
+            <button class="btn ghost sm" id="bj-reset" type="button" style="margin-top:12px;">Réinitialiser les crédits</button>
+          </div>
+        </div>
+
+        <!-- ADDICTION -->
+        <div class="card tool-card col-4" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="heart"></span>
+            <h3>Compteur d'addiction</h3>
+          </div>
+          <div class="tc-body">
+            <div class="addict-meter">
+              <div class="addict-track"><div class="addict-bar" id="addict-bar"></div></div>
+              <div class="addict-label" id="addict-label">Débutant innocent…</div>
+              <div class="addict-count" id="addict-count">0 partie jouée</div>
+            </div>
+            <button class="btn sm ghost" id="addict-reset" style="margin-top:14px;">Se faire soigner (remettre à 0)</button>
+            <div class="bj-rules">
+              <h4>Les règles</h4>
+              <ul>
+                <li>As = 1 ou 11, figures = 10.</li>
+                <li>Le croupier tire jusqu'à 17.</li>
+                <li>Blackjack paie 3:2.</li>
+                <li>Doubler = 1 carte, mise ×2.</li>
+              </ul>
+              <p class="muted">Aucun argent réel n'est en jeu. Promis. (Ou pas.)</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- MACHINES À SOUS -->
+        <div class="card tool-card col-4" data-reveal style="--d:.06s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="dice"></span>
+            <h3>Machines à sous</h3>
+          </div>
+          <div class="tc-body">
+            <div class="bj-balance">
+              <span>Crédits</span>
+              <strong class="wallet-num">1000</strong>
+            </div>
+            <div class="slot-machine">
+              <div class="slot-reels">
+                <div class="slot-reel" id="slot-r1">🍒</div>
+                <div class="slot-reel" id="slot-r2">🍒</div>
+                <div class="slot-reel" id="slot-r3">🍒</div>
+              </div>
+              <div class="slot-payout" id="slot-result">Clique sur SPIN !</div>
+            </div>
+            <div class="bj-bets slot-bets">
+              <span class="bj-label">Mise</span>
+              <button class="btn sm ghost" id="slot-minus" type="button" aria-label="Mise -5">−</button>
+              <strong id="slot-bet" class="bj-bet-num">10</strong>
+              <button class="btn sm ghost" id="slot-plus" type="button" aria-label="Mise +5">+</button>
+            </div>
+            <div class="bj-actions">
+              <button class="btn" id="slot-spin" type="button">SPIN</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TICKET À GRATTER -->
+        <div class="card tool-card col-4" data-reveal style="--d:.12s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="trophy"></span>
+            <h3>Ticket à gratter</h3>
+          </div>
+          <div class="tc-body">
+            <div class="bj-balance">
+              <span>Crédits</span>
+              <strong class="wallet-num">1000</strong>
+            </div>
+            <div class="scratch-info">
+              Coût du ticket : <strong>20 crédits</strong> · gratte les 9 cases
+            </div>
+            <div class="scratch-grid" id="scratch-grid"></div>
+            <div class="slot-payout" id="scratch-result">Achète un ticket !</div>
+            <div class="bj-actions">
+              <button class="btn" id="scratch-buy" type="button">Acheter un ticket (20)</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ROULETTE -->
+        <div class="card tool-card col-4" data-reveal style="--d:.18s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="refresh"></span>
+            <h3>Roulette</h3>
+          </div>
+          <div class="tc-body">
+            <div class="bj-balance">
+              <span>Crédits</span>
+              <strong class="wallet-num">1000</strong>
+            </div>
+            <div class="rt-board" id="rt-board"></div>
+            <div class="rt-bet-types">
+              <button class="btn sm ghost" id="rt-rouge" type="button">Rouge</button>
+              <button class="btn sm ghost" id="rt-noir" type="button">Noir</button>
+              <span class="rt-hint">ou clique un numéro</span>
+            </div>
+            <div class="bj-bets slot-bets">
+              <span class="bj-label">Mise</span>
+              <button class="btn sm ghost" id="rt-minus" type="button" aria-label="Mise -5">−</button>
+              <strong id="rt-bet" class="bj-bet-num">10</strong>
+              <button class="btn sm ghost" id="rt-plus" type="button" aria-label="Mise +5">+</button>
+            </div>
+            <div class="slot-payout" id="rt-result">Choisis un pari, puis lance la bille !</div>
+            <div class="bj-actions">
+              <button class="btn" id="rt-spin" type="button">Lancer la bille</button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
+  <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+  <nav class="footer-links">
+    <a href="sondages.html">Sondages</a>
+    <a href="mentions.html">Mentions légales</a>
+  </nav>
+</footer>
+
+<div class="toasts"></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script src="js/jeux.js"></script>
+</body>
+</html>

@@ -444,6 +444,7 @@
     music: '<path d="M9 18V5l12-2v13"/><circle cx="6" cy="18" r="3"/><circle cx="18" cy="16" r="3"/>',
     film: '<rect x="2" y="2" width="20" height="20" rx="2.18" ry="2.18"/><line x1="7" y1="2" x2="7" y2="22"/><line x1="17" y1="2" x2="17" y2="22"/><line x1="2" y1="12" x2="22" y2="12"/><line x1="2" y1="7" x2="7" y2="7"/><line x1="2" y1="17" x2="7" y2="17"/><line x1="17" y1="17" x2="22" y2="17"/><line x1="17" y1="7" x2="22" y2="7"/>',
     dice: '<rect x="3" y="3" width="18" height="18" rx="4"/><circle cx="8.5" cy="8.5" r="1.2"/><circle cx="15.5" cy="8.5" r="1.2"/><circle cx="8.5" cy="15.5" r="1.2"/><circle cx="15.5" cy="15.5" r="1.2"/><circle cx="12" cy="12" r="1.2"/>',
+    gamepad: '<path d="M6 8h12a2 2 0 0 1 2 2v6a2 2 0 0 1-2 2h-3l-1.5-3h-5L7 18H4a2 2 0 0 1-2-2v-6a2 2 0 0 1 2-2z"/><path d="M9 11v2"/><path d="M8 12h2"/><path d="M15 11h.01"/><path d="M17 13h.01"/>',
     sparkles: '<path d="M12 3l1.9 5.7a2 2 0 0 0 1.3 1.3L21 12l-5.8 1.9a2 2 0 0 0-1.3 1.3L12 21l-1.9-5.8a2 2 0 0 0-1.3-1.3L3 12l5.8-1.9a2 2 0 0 0 1.3-1.3z"/><line x1="19" y1="3" x2="19" y2="6"/><line x1="17" y1="4.5" x2="21" y2="4.5"/>',
     check: '<polyline points="20 6 9 17 4 12"/>',
     upload: '<path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="17 8 12 3 7 8"/><line x1="12" y1="3" x2="12" y2="15"/>',
@@ -480,7 +481,7 @@
     if (!track) return;
     const items = [
       'Archives &amp; Nostalgie', 'Défis &amp; Vie de groupe', 'Fil d\u2019actualité',
-      'Coffre-fort', 'Ludique &amp; Divertissement', 'Sondages &amp; Votes', 'Playlist commune'
+      'Coffre-fort', 'Ludique &amp; Divertissement', 'Sondages &amp; Votes', 'Jeux &amp; Addiction', 'Playlist commune'
     ];
     const copy = items.map((t) => '<span>' + t + '</span><span class="sep">✦</span>').join('');
     track.innerHTML = copy + copy;

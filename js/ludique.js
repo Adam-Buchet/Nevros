@@ -463,6 +463,274 @@
     });
   }
 
+  /* ============ CHRONOMÈTRE ============ */
+  const chronoDisplay = $('#chrono-display');
+  let chronoInt = null;
+  let chronoStart = 0;
+  let chronoElapsed = 0;
+  function chronoTick() {
+    const el = chronoElapsed + (performance.now() - chronoStart);
+    const cs = Math.floor((el % 1000) / 100);
+    const sec = Math.floor(el / 1000) % 60;
+    const min = Math.floor(el / 60000);
+    chronoDisplay.textContent = String(min).padStart(2, '0') + ':' + String(sec).padStart(2, '0') + ',' + cs;
+  }
+  $('#chrono-start').addEventListener('click', () => {
+    if (chronoInt) {
+      clearInterval(chronoInt);
+      chronoInt = null;
+      chronoElapsed += performance.now() - chronoStart;
+      $('#chrono-start').textContent = 'Reprendre';
+      return;
+    }
+    chronoStart = performance.now();
+    chronoInt = setInterval(chronoTick, 80);
+    $('#chrono-start').textContent = 'Arrêter';
+    chronoTick();
+  });
+  $('#chrono-reset').addEventListener('click', () => {
+    clearInterval(chronoInt);
+    chronoInt = null;
+    chronoElapsed = 0;
+    chronoDisplay.textContent = '00:00,0';
+    $('#chrono-start').textContent = 'Démarrer';
+  });
+
+  /* ============ MINUTEUR ============ */
+  const timerDisplay = $('#timer-display');
+  let timerInt = null;
+  let timerEnd = 0;
+  function beep() {
+    try {
+      const ctx = new (window.AudioContext || window.webkitAudioContext)();
+      const o = ctx.createOscillator();
+      const g = ctx.createGain();
+      o.connect(g);
+      g.connect(ctx.destination);
+      o.frequency.value = 880;
+      g.gain.setValueAtTime(0.2, ctx.currentTime);
+      g.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.9);
+      o.start();
+      o.stop(ctx.currentTime + 0.9);
+    } catch (e) {}
+  }
+  function timerTick() {
+    const left = Math.max(0, timerEnd - Date.now());
+    const sec = Math.floor(left / 1000);
+    timerDisplay.textContent = String(Math.floor(sec / 60)).padStart(2, '0') + ':' + String(sec % 60).padStart(2, '0');
+    if (left <= 0) {
+      clearInterval(timerInt);
+      timerInt = null;
+      timerDisplay.classList.add('finished');
+      timerDisplay.textContent = 'Terminé !';
+      beep();
+    }
+  }
+  $('#timer-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const min = parseInt($('#timer-min').value, 10) || 0;
+    const sec = parseInt($('#timer-sec').value, 10) || 0;
+    const total = min * 60 + sec;
+    if (total <= 0) { toast('Règle un temps.', true); return; }
+    if (total > 7200) { toast('Maximum 2 heures.', true); return; }
+    clearInterval(timerInt);
+    timerEnd = Date.now() + total * 1000;
+    timerInt = setInterval(timerTick, 250);
+    timerDisplay.classList.remove('finished');
+    timerTick();
+  });
+  $('#timer-stop').addEventListener('click', () => {
+    clearInterval(timerInt);
+    timerInt = null;
+    timerDisplay.classList.remove('finished');
+    timerDisplay.textContent = '00:00';
+  });
+
+  /* ============ ACTION OU VÉRITÉ ============ */
+  const VERITES = [
+    'Quel est le pire truc que tu aies dit à quelqu\u2019un de la bande ?',
+    'Quelle est ta pire habitude ?',
+    'Quel est le surnom que tu détestes le plus ?',
+    'Raconte ton plus gros fou rire en groupe.',
+    'Qui de la bande serait le pire président ?',
+    'Quel est ton plus gros regret en soirée ?',
+    'Quelle est la dernière chose que tu as googlée ?',
+    'Qui de la bande a le plus mauvais goût musical selon toi ?',
+    'Quel truc embarrassant gardes-tu dans ton téléphone ?',
+    'Qui paierais-tu pour ne plus jamais revoir ?',
+    'Raconte ton moment le plus gênant.',
+    'Qui est le plus susceptible de répondre à 3h du matin ?',
+    'Quelle est ta plus grande phobie ?',
+    'As-tu déjà fait semblant d\u2019être malade pour éviter un truc du groupe ?',
+    'Qui de la bande râle le plus ?',
+    'Quelle est la première chose que tu remarques chez quelqu\u2019un ?'
+  ];
+  const ACTIONS = [
+    'Imite quelqu\u2019un de la bande jusqu\u2019à ce qu\u2019on devine qui c\u2019est.',
+    'Fais le tour de la pièce en marchant comme un robot.',
+    'Chante le refrain de ta chanson préférée en criant.',
+    'Envoie un message "Je suis tellement désolé" à ton dernier appel récent.',
+    'Laisse quelqu\u2019un poster une photo à ta place.',
+    'Parle avec un accent étranger pendant 3 minutes.',
+    'Fais 10 pompes (ou 20 squats).',
+    'Raconte une blague. Si personne ne rit, recommence.',
+    'Danse comme personne ne regarde pendant 30 secondes.',
+    'Change ta photo de profil de groupe pour un selfie de toi en train de rigoler.',
+    'Mime un animal et fais deviner lequel.',
+    'Complimente sincèrement chaque personne présente.',
+    'Laisse un membre de la bande choisir ta prochaine boisson.',
+    'Fais semblant d\u2019être un présentateur météo qui annonce la soirée.',
+    'Utilise seulement des rimes pour parler pendant 5 minutes.',
+    'Laisse quelqu\u2019un écrire un statut et poste-le.'
+  ];
+  const avResult = $('#av-result');
+  $('#av-verite').addEventListener('click', () => {
+    avResult.textContent = VERITES[Math.floor(Math.random() * VERITES.length)];
+  });
+  $('#av-action').addEventListener('click', () => {
+    avResult.textContent = ACTIONS[Math.floor(Math.random() * ACTIONS.length)];
+  });
+
+  /* ============ PIERRE PAPIER CISEAUX ============ */
+  const MOVES = {
+    pierre: { beats: 'ciseaux', icon: '🪨' },
+    papier: { beats: 'pierre', icon: '📄' },
+    ciseaux: { beats: 'papier', icon: '✂️' }
+  };
+  let pfcScore = { w: 0, l: 0, d: 0 };
+  try { pfcScore = JSON.parse(localStorage.getItem('aa_pfc')) || pfcScore; } catch (e) {}
+  const pfcResult = $('#pfc-result');
+  function pfcRender() {
+    pfcResult.textContent = 'Toi ' + pfcScore.w + ' · Lui ' + pfcScore.l + ' · Égalité ' + pfcScore.d;
+  }
+  $$('.pfc-btn').forEach((btn) => {
+    btn.addEventListener('click', () => {
+      const me = btn.dataset.move;
+      const cpu = Object.keys(MOVES)[Math.floor(Math.random() * 3)];
+      let r;
+      if (me === cpu) { r = 'Égalité !'; pfcScore.d++; }
+      else if (MOVES[me].beats === cpu) { r = 'Victoire !'; pfcScore.w++; }
+      else { r = 'Défaite…'; pfcScore.l++; }
+      try { localStorage.setItem('aa_pfc', JSON.stringify(pfcScore)); } catch (e) {}
+      pfcResult.textContent = MOVES[me].icon + ' vs ' + MOVES[cpu].icon + ' — ' + r + ' (Toi ' + pfcScore.w + ' · Lui ' + pfcScore.l + ' · Égalité ' + pfcScore.d + ')';
+    });
+  });
+  $('#pfc-reset').addEventListener('click', () => {
+    pfcScore = { w: 0, l: 0, d: 0 };
+    try { localStorage.setItem('aa_pfc', JSON.stringify(pfcScore)); } catch (e) {}
+    pfcRender();
+  });
+  pfcRender();
+
+  /* ============ TIRE UNE CARTE ============ */
+  const SUITS = [
+    { s: '\u2660', n: 'pique' },
+    { s: '\u2665', n: 'cœur' },
+    { s: '\u2666', n: 'carreau' },
+    { s: '\u2663', n: 'trèfle' }
+  ];
+  const CARD_VALUES = ['As', '2', '3', '4', '5', '6', '7', '8', '9', '10', 'Valet', 'Dame', 'Roi'];
+  const cardView = $('#card-view');
+  const cardResult = $('#card-result');
+  $('#card-btn').addEventListener('click', () => {
+    const suit = SUITS[Math.floor(Math.random() * 4)];
+    const val = CARD_VALUES[Math.floor(Math.random() * 13)];
+    cardView.classList.remove('flip');
+    void cardView.offsetWidth;
+    cardView.classList.add('flip');
+    cardView.textContent = val === '10' ? '10' : val[0];
+    cardView.style.color = (suit.n === 'cœur' || suit.n === 'carreau') ? '#ef4444' : '#17181d';
+    cardResult.textContent = val + ' de ' + suit.n + ' ' + suit.s;
+  });
+
+  /* ============ TIRAGE AU SORT ============ */
+  $('#pick-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const raw = $('#pick-input').value;
+    const opts = raw.split(/[\n,;]/).map((s) => s.trim()).filter(Boolean);
+    if (!opts.length) { toast('Écris au moins une option.', true); return; }
+    const winner = opts[Math.floor(Math.random() * opts.length)];
+    $('#pick-result').textContent = winner;
+  });
+
+  /* ============ LE JUSTE PRIX ============ */
+  let jpTarget = 1 + Math.floor(Math.random() * 100);
+  let jpTries = 0;
+  let jpBest = Infinity;
+  try { jpBest = parseInt(localStorage.getItem('aa_jp'), 10) || Infinity; } catch (e) {}
+  const jpResult = $('#jp-result');
+  function jpRender() {
+    jpResult.textContent = isFinite(jpBest) ? 'Nouvelle partie. Record : ' + jpBest + ' essai(s).' : 'Nouvelle partie. Devine entre 1 et 100.';
+  }
+  $('#jp-form').addEventListener('submit', (e) => {
+    e.preventDefault();
+    const g = parseInt($('#jp-guess').value, 10);
+    if (isNaN(g)) { toast('Entre un nombre.', true); return; }
+    jpTries++;
+    if (g === jpTarget) {
+      jpResult.textContent = 'Gagné en ' + jpTries + ' essai' + (jpTries > 1 ? 's' : '') + ' ! 🎉';
+      if (jpTries < jpBest) {
+        jpBest = jpTries;
+        try { localStorage.setItem('aa_jp', String(jpBest)); } catch (err) {}
+        jpResult.textContent += ' Nouveau record !';
+      }
+    } else if (g < jpTarget) {
+      jpResult.textContent = 'C\u2019est plus. (' + jpTries + ' tentative' + (jpTries > 1 ? 's' : '') + ')';
+    } else {
+      jpResult.textContent = 'C\u2019est moins. (' + jpTries + ' tentative' + (jpTries > 1 ? 's' : '') + ')';
+    }
+    $('#jp-guess').value = '';
+    $('#jp-guess').focus();
+  });
+  $('#jp-new').addEventListener('click', () => {
+    jpTarget = 1 + Math.floor(Math.random() * 100);
+    jpTries = 0;
+    jpRender();
+    $('#jp-guess').value = '';
+    $('#jp-guess').focus();
+  });
+  jpRender();
+
+  /* ============ ÉQUIPES ALÉATOIRES ============ */
+  const teamGrid = $('#team-grid');
+  function renderTeam(title, members) {
+    const box = document.createElement('div');
+    box.className = 'team-box';
+    const t = document.createElement('div');
+    t.className = 'team-title';
+    t.textContent = title + ' · ' + members.length;
+    box.appendChild(t);
+    const chips = document.createElement('div');
+    chips.className = 'chips';
+    members.forEach((m) => {
+      const c = document.createElement('span');
+      c.className = 'chip';
+      c.textContent = m;
+      chips.appendChild(c);
+    });
+    box.appendChild(chips);
+    teamGrid.appendChild(box);
+  }
+  $('#team-btn').addEventListener('click', async () => {
+    let names = [];
+    try {
+      names = await api('/api/names');
+    } catch (err) {
+      toast(err.message, true);
+      return;
+    }
+    if (names.length < 2) { toast('Ajoute d\u2019abord des prénoms dans la roulette.', true); return; }
+    const pool = names.map((n) => n.name);
+    for (let i = pool.length - 1; i > 0; i--) {
+      const j = Math.floor(Math.random() * (i + 1));
+      const tmp = pool[i]; pool[i] = pool[j]; pool[j] = tmp;
+    }
+    const half = Math.ceil(pool.length / 2);
+    teamGrid.innerHTML = '';
+    renderTeam('Équipe 1', pool.slice(0, half));
+    renderTeam('Équipe 2', pool.slice(half));
+  });
+
   /* ============ INIT ============ */
   renderOptionInputs();
   loadPlaylist();

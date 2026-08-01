@@ -78,7 +78,8 @@
     <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
     <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span><span class="grad">Ludique &amp; Divertissement</span></a></div>
     <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span>Sondages &amp; Votes</a></div>
-    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">08</span>Mentions légales</a></div>
+    <div class="menu-item"><a class="menu-link" href="jeux.html"><span class="idx">08</span>Jeux &amp; Addiction</a></div>
+    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">09</span>Mentions légales</a></div>
   </div>
   <div class="menu-foot">
     <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
@@ -225,6 +226,135 @@
               <div class="big">🛒</div>
               Rien à acheter. (C'est louche.)
             </div>
+          </div>
+        </div>
+
+        <!-- CHRONOMÈTRE -->
+        <div class="card tool-card col-4" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="clock"></span>
+            <h3>Chronomètre</h3>
+          </div>
+          <div class="tc-body">
+            <div class="timer-display" id="chrono-display">00:00,0</div>
+            <div class="toolbar" style="margin:0;">
+              <button class="btn sm" id="chrono-start" style="margin:0;">Démarrer</button>
+              <button class="btn sm ghost" id="chrono-reset" style="margin:0;">Remettre à zéro</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- MINUTEUR -->
+        <div class="card tool-card col-4" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="clock"></span>
+            <h3>Minuteur</h3>
+          </div>
+          <div class="tc-body">
+            <div class="timer-display" id="timer-display">00:00</div>
+            <form id="timer-form" class="toolbar" style="margin-bottom:12px;">
+              <input class="input" type="number" id="timer-min" value="1" min="0" max="120" placeholder="Min" style="min-width:86px;">
+              <input class="input" type="number" id="timer-sec" value="0" min="0" max="59" placeholder="Sec" style="min-width:86px;">
+              <button class="btn sm" type="submit" style="margin:0;">Go</button>
+            </form>
+            <div class="toolbar" style="margin:0;">
+              <button class="btn sm ghost" id="timer-stop" type="button" style="margin:0;">Arrêter</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ACTION OU VÉRITÉ -->
+        <div class="card tool-card col-4" data-reveal style="--d:.16s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="question"></span>
+            <h3>Action ou vérité</h3>
+          </div>
+          <div class="tc-body">
+            <div class="tool-msg" id="av-result">Prêt ?</div>
+            <div class="toolbar" style="margin:0;">
+              <button class="btn sm" id="av-verite" style="margin:0;">Vérité</button>
+              <button class="btn sm ghost" id="av-action" style="margin:0;">Action</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- PIERRE PAPIER CISEAUX -->
+        <div class="card tool-card col-4" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="dice"></span>
+            <h3>Pierre · Papier · Ciseaux</h3>
+          </div>
+          <div class="tc-body">
+            <div class="pfc-btns">
+              <button class="pfc-btn" data-move="pierre" aria-label="Pierre">🪨</button>
+              <button class="pfc-btn" data-move="papier" aria-label="Papier">📄</button>
+              <button class="pfc-btn" data-move="ciseaux" aria-label="Ciseaux">✂️</button>
+            </div>
+            <div class="tool-msg" id="pfc-result">Choisis ton coup !</div>
+            <div class="toolbar" style="margin:0;">
+              <button class="btn sm ghost" id="pfc-reset" style="margin:0;">Remettre à 0</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- TIRE UNE CARTE -->
+        <div class="card tool-card col-4" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="sparkles"></span>
+            <h3>Tire une carte</h3>
+          </div>
+          <div class="tc-body">
+            <div class="card-view" id="card-view">?</div>
+            <div class="roulette-result"><div class="name" id="card-result">—</div></div>
+            <button class="btn sm" id="card-btn" style="margin-top:12px;" data-magnetic>Tirer une carte</button>
+          </div>
+        </div>
+
+        <!-- TIRAGE AU SORT -->
+        <div class="card tool-card col-6" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="users"></span>
+            <h3>Tirage au sort</h3>
+          </div>
+          <div class="tc-body">
+            <form id="pick-form">
+              <textarea class="input" id="pick-input" rows="4" placeholder="Une option par ligne (ou séparées par des virgules)"></textarea>
+              <div class="toolbar" style="margin:12px 0 0;">
+                <button class="btn sm" type="submit" style="margin:0;">Tirer au sort</button>
+              </div>
+            </form>
+            <div class="roulette-result"><div class="name" id="pick-result">—</div></div>
+          </div>
+        </div>
+
+        <!-- LE JUSTE PRIX -->
+        <div class="card tool-card col-6" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="trophy"></span>
+            <h3>Le juste prix</h3>
+          </div>
+          <div class="tc-body">
+            <form id="jp-form" class="toolbar" style="margin-bottom:12px;">
+              <input class="input" type="number" id="jp-guess" placeholder="Entre 1 et 100" style="min-width:120px;">
+              <button class="btn sm" type="submit" style="margin:0;">Deviner</button>
+            </form>
+            <div class="tool-msg" id="jp-result">—</div>
+            <div class="toolbar" style="margin:0;">
+              <button class="btn sm ghost" id="jp-new" style="margin:0;">Nouvelle partie</button>
+            </div>
+          </div>
+        </div>
+
+        <!-- ÉQUIPES ALÉATOIRES -->
+        <div class="card tool-card col-6" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="users"></span>
+            <h3>Équipes aléatoires</h3>
+          </div>
+          <div class="tc-body">
+            <p class="meta" style="margin-bottom:12px;">Répartit les prénoms de la roulette en 2 équipes.</p>
+            <div class="team-grid" id="team-grid"></div>
+            <button class="btn sm" id="team-btn" style="margin-top:12px;" data-magnetic>Mélanger les équipes</button>
           </div>
         </div>
 
