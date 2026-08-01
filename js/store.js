@@ -238,7 +238,8 @@
       return Promise.resolve(all('posts').map(function (p) {
         return {
           id: p.id, text: p.text, author: p.author, likes: p.likes,
-          created_at: p.created_at, liked: (p.liked_sids || []).indexOf(my) >= 0
+          created_at: p.created_at, liked: (p.liked_sids || []).indexOf(my) >= 0,
+          fake: !!p.fake
         };
       }));
     }
