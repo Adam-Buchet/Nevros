@@ -88,6 +88,8 @@
     <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
     <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
     <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
+    <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span>Sondages &amp; Votes</a></div>
+    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">08</span>Mentions légales</a></div>
   </div>
   <div class="menu-foot">
     <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
@@ -112,9 +114,8 @@
       </div>
 
       <span class="hero-kicker" data-reveal>Espace privé du groupe</span>
-      <h1 class="hero-title" aria-label="Atrocement Autiste">
-        <span class="line" data-reveal="clip">Atrocement</span>
-        <span class="line" data-reveal="clip" style="--d:.12s"><span class="grad">Autiste</span></span>
+      <h1 class="hero-title" id="hero-type" aria-label="Atrocement Autiste">
+        <span class="line type-line" data-reveal="clip"><span class="type-wrap"><span class="type-text" id="type-text">Atrocement Autiste</span><span class="type-caret" aria-hidden="true"></span></span></span>
       </h1>
       <p class="hero-sub" data-reveal style="--d:.25s">
         L'espace privé du groupe. Archives, défis, actu, trésor caché et jeux — tout est là, pour nous, rien que pour nous.
@@ -205,6 +206,24 @@
           <h3>Playlist commune</h3>
           <p>Chacun ajoute ses sons, on vote pour les meilleurs. Le son du groupe.</p>
         </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <span class="section-kicker" data-reveal>Nos souvenirs</span>
+      <h2 class="h2" data-reveal>La mosaïque du <span class="grad">groupe</span></h2>
+      <p class="lead" data-reveal style="--d:.1s">
+        Un aperçu des photos partagées. Survole-les, elles te racontent un souvenir.
+      </p>
+      <div class="mosaic" id="mosaic-grid" data-reveal style="--d:.15s"></div>
+      <div class="empty" id="mosaic-empty" style="display:none;">
+        <div class="big">📸</div>
+        Aucune photo partagée pour l'instant.
+      </div>
+      <div style="text-align:center; margin-top:30px;" data-reveal>
+        <a class="btn ghost" href="archives.html">Voir les archives <span data-icon="arrow"></span></a>
       </div>
     </div>
   </section>
@@ -305,11 +324,16 @@
 
 <footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
   <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+  <nav class="footer-links">
+    <a href="sondages.html">Sondages</a>
+    <a href="mentions.html">Mentions légales</a>
+  </nav>
 </footer>
 
 <div class="toasts"></div>
 
 <script src="js/store.js"></script>
 <script src="js/app.js"></script>
+<script src="js/mosaic.js"></script>
 </body>
 </html>

@@ -7,11 +7,66 @@
   const addBtn = $('#defi-add');
   const textInput = $('#defi-text');
 
+  function renderRank(items) {
+    const counts = {};
+    items.forEach(function (i) {
+      if (!i.done) return;
+      const n = String(i.done_by || '').trim();
+      if (!n || n === 'Anonyme' || n === 'Quelqu\u2019un') return;
+      counts[n] = (counts[n] || 0) + 1;
+    });
+    const ranked = Object.keys(counts)
+      .map(function (name) { return { name: name, n: counts[name] }; })
+      .sort(function (a, b) { return b.n - a.n || String(a.name).localeCompare(String(b.name), 'fr'); });
+
+    const podium = $('#podium');
+    const rankList = $('#rank-list');
+    const rankEmpty = $('#rank-empty');
+    if (!ranked.length) {
+      podium.innerHTML = '';
+      rankList.innerHTML = '';
+      rankList.style.display = 'none';
+      rankEmpty.style.display = 'block';
+      return;
+    }
+    rankEmpty.style.display = 'none';
+
+    const medals = ['🥇', '🥈', '🥉'];
+    const order = [1, 0, 2];
+    podium.innerHTML = order.map(function (rankIdx) {
+      const p = ranked[rankIdx];
+      if (!p) {
+        return '<div class="podium-cell empty"><div class="podium-bar"></div><div class="podium-name">—</div></div>';
+      }
+      return '<div class="podium-cell' + (rankIdx === 0 ? ' first' : '') + '">' +
+        '<div class="podium-bar"><span class="podium-medal">' + medals[rankIdx] + '</span></div>' +
+        '<div class="podium-name">' + escapeHtml(p.name) + '</div>' +
+        '<div class="podium-count">' + p.n + ' défi' + (p.n > 1 ? 's' : '') + '</div>' +
+        '</div>';
+    }).join('');
+
+    const rest = ranked.slice(3);
+    if (!rest.length) {
+      rankList.innerHTML = '';
+      rankList.style.display = 'none';
+      return;
+    }
+    rankList.style.display = '';
+    rankList.innerHTML = rest.map(function (p, i) {
+      return '<div class="rank-row">' +
+        '<span class="rank-idx">' + (i + 4) + '</span>' +
+        '<span class="rank-name">' + escapeHtml(p.name) + '</span>' +
+        '<span class="rank-count">' + p.n + ' défi' + (p.n > 1 ? 's' : '') + '</span>' +
+        '</div>';
+    }).join('');
+  }
+
   async function load() {
     const items = await api('/api/defis');
     const done = items.filter(i => i.done).length;
     $('#stat-open').textContent = items.length - done;
     $('#stat-done').textContent = done;
+    renderRank(items);
 
     list.innerHTML = '';
     empty.style.display = items.length ? 'none' : 'block';

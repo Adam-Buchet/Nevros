@@ -1,8 +1,8 @@
 /* Service worker — Atrocement Autiste (version statique, chemins relatifs) */
 
 const CACHE_PREFIX = 'aa-';
-const CORE_CACHE = CACHE_PREFIX + 'core-v4';
-const RUNTIME_CACHE = CACHE_PREFIX + 'runtime-v4';
+const CORE_CACHE = CACHE_PREFIX + 'core-v5';
+const RUNTIME_CACHE = CACHE_PREFIX + 'runtime-v5';
 
 const PRECACHE = [
   './',
@@ -13,6 +13,8 @@ const PRECACHE = [
   './actualites.html',
   './coffre.html',
   './ludique.html',
+  './sondages.html',
+  './mentions.html',
   './manifest.json',
   './icons/logo.svg',
   './css/styles.css',
@@ -31,7 +33,9 @@ const PRECACHE = [
   './js/defis.js',
   './js/actualites.js',
   './js/coffre.js',
-  './js/ludique.js'
+  './js/ludique.js',
+  './js/sondages.js',
+  './js/mosaic.js'
 ];
 
 self.addEventListener('install', (event) => {

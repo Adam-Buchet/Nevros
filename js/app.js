@@ -320,6 +320,82 @@
     });
   }
 
+  /* ================== TITRE ANIMÉ (accueil) ================== */
+  function initHeroTypewriter() {
+    const title = $('#hero-type');
+    const textEl = $('#type-text');
+    if (!title || !textEl) return;
+
+    const TITLES = [
+      { lang: 'Français', text: 'Atrocement Autiste' },
+      { lang: 'English', text: 'Terribly Autistic' },
+      { lang: 'Español', text: 'Atrozmente Autista' },
+      { lang: 'Deutsch', text: 'Furchtbar Autistisch' },
+      { lang: '中文', text: '极其自闭' }
+    ];
+
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
+      textEl.textContent = TITLES[0].text;
+      title.setAttribute('aria-label', TITLES[0].text);
+      return;
+    }
+
+    let idx = 0;
+    const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+
+    const applyFont = () => {
+      const wrap = title.closest('.container');
+      const maxW = Math.max(180, (wrap ? wrap.clientWidth : title.clientWidth) - 48);
+      const family = getComputedStyle(title).fontFamily;
+      const ctx = document.createElement('canvas').getContext('2d');
+      const longest = TITLES.slice().sort((a, b) => b.text.length - a.text.length)[0].text;
+      let fs = 190;
+      ctx.font = '400 ' + fs + 'px ' + family;
+      while (fs > 24 && ctx.measureText(longest).width > maxW) {
+        fs -= 4;
+        ctx.font = '400 ' + fs + 'px ' + family;
+      }
+      title.style.fontSize = fs + 'px';
+    };
+    applyFont();
+    window.addEventListener('resize', applyFont);
+
+    const type = async (text) => {
+      for (let i = 0; i < text.length; i++) {
+        textEl.textContent = text.slice(0, i + 1);
+        title.setAttribute('aria-label', text);
+        await sleep(95);
+      }
+    };
+
+    const erase = async (text) => {
+      for (let i = text.length; i >= 0; i--) {
+        textEl.textContent = text.slice(0, i);
+        await sleep(48);
+      }
+    };
+
+    (async () => {
+      try {
+        if (document.fonts && document.fonts.ready) {
+          await document.fonts.ready;
+          await document.fonts.load('400 190px Anton');
+        }
+      } catch (e) {}
+      applyFont();
+      await sleep(700);
+      textEl.textContent = '';
+      while (true) {
+        const item = TITLES[idx % TITLES.length];
+        await type(item.text);
+        await sleep(1600);
+        await erase(item.text);
+        await sleep(550);
+        idx++;
+      }
+    })();
+  }
+
   /* ================== NAV SCROLL ================== */
   function initNavScroll() {
     const nav = $('.nav');
@@ -390,7 +466,7 @@
     if (!track) return;
     const items = [
       'Archives &amp; Nostalgie', 'Défis &amp; Vie de groupe', 'Fil d\u2019actualité',
-      'Coffre-fort', 'Ludique &amp; Divertissement', 'Playlist commune'
+      'Coffre-fort', 'Ludique &amp; Divertissement', 'Sondages &amp; Votes', 'Playlist commune'
     ];
     const copy = items.map((t) => '<span>' + t + '</span><span class="sep">✦</span>').join('');
     track.innerHTML = copy + copy;
@@ -536,15 +612,15 @@
       } catch (e) {}
     };
 
-    const watchdog = setTimeout(cleanup, 8000);
+    const watchdog = setTimeout(cleanup, 15000);
 
     try {
       document.body.style.overflow = 'hidden';
       intro.classList.add('show');
       await sleep(120);
-      await typeText(titleEl, 'NÉVROS', 90);
+      await typeText(titleEl, 'AUTISME', 90);
       await sleep(280);
-      await typeText(defEl, 'névroser — rendre névrosé, angoisser, faire péter les plombs. Avec amour.', 24);
+      await typeText(defEl, 'autisme — trouble du neurodéveloppement qui affecte la communication, les interactions sociales, et se manifeste par des centres d\u2019intérêt restreints et des comportements répétitifs.', 24);
       await sleep(800);
       await backspaceText(defEl, 18);
       await backspaceText(titleEl, 60);
@@ -570,6 +646,7 @@
     initTransitions();
     initMarquee();
     initHeroTilt();
+    initHeroTypewriter();
     initPWA();
     initNick();
     if (/[?&]intro=1/.test(location.search)) playIntro();

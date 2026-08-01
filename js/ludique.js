@@ -100,16 +100,45 @@
   const disk = $('#roulette-disk');
   const result = $('#roulette-result');
   const chipsBox = $('#name-chips');
-  const COLORS = ['#8b5cf6', '#f472b6', '#22d3ee', '#fbbf24', '#34d399', '#fb923c', '#a78bfa', '#f43f5e'];
   let wheelRot = 0;
   let spinning = false;
+  let wheelNames = [];
+
+  function contrast(hex) {
+    const m = /^#?([0-9a-f]{6})$/i.exec(hex || '');
+    if (!m) return '#fff';
+    const n = parseInt(m[1], 16);
+    const lum = (0.299 * ((n >> 16) & 255) + 0.587 * ((n >> 8) & 255) + 0.114 * (n & 255)) / 255;
+    return lum > 0.62 ? 'rgba(12, 15, 22, .92)' : '#fff';
+  }
+
+  function renderWheelLabels() {
+    disk.innerHTML = '';
+    const n = wheelNames.length;
+    if (!n) return;
+    const size = disk.offsetWidth || 280;
+    const r = size * 0.33;
+    const base = Math.max(9, Math.min(14, 15 - Math.max(0, n - 5) * 0.65));
+    wheelNames.forEach((name, i) => {
+      const span = document.createElement('span');
+      span.className = 'wheel-label';
+      span.textContent = name.name;
+      const mid = ((i + 0.5) / n) * 360;
+      span.style.color = contrast(name.color);
+      const len = Math.max(4, name.name.length);
+      span.style.fontSize = Math.max(8, Math.min(base, Math.floor(120 / len))) + 'px';
+      span.style.transform = 'translate(-50%,-50%) rotate(' + mid + 'deg) translateY(-' + r + 'px) rotate(' + (-mid) + 'deg)';
+      disk.appendChild(span);
+    });
+  }
 
   async function loadNames() {
     const names = await api('/api/names');
     chipsBox.innerHTML = '';
+    wheelNames = names;
     if (names.length) {
-      disk.style.background = 'conic-gradient(' + names.map((_, i) => {
-        const c = COLORS[i % COLORS.length];
+      disk.style.background = 'conic-gradient(' + names.map((n, i) => {
+        const c = n.color;
         const from = (i / names.length) * 360;
         const to = ((i + 1) / names.length) * 360;
         return c + ' ' + from + 'deg ' + to + 'deg';
@@ -117,10 +146,16 @@
     } else {
       disk.style.background = 'conic-gradient(#2a2a32 0deg 360deg)';
     }
+    renderWheelLabels();
     names.forEach((n) => {
       const chip = document.createElement('span');
       chip.className = 'chip';
-      chip.textContent = n.name;
+      chip.dataset.color = n.color || '';
+      const dot = document.createElement('i');
+      dot.className = 'chip-dot';
+      dot.style.background = n.color || '#9ca3af';
+      chip.appendChild(dot);
+      chip.appendChild(document.createTextNode(n.name));
       const del = document.createElement('button');
       del.setAttribute('aria-label', 'Retirer ' + n.name);
       del.innerHTML = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" width="11" height="11"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>';
@@ -134,6 +169,10 @@
       chipsBox.appendChild(chip);
     });
   }
+
+  window.addEventListener('resize', () => {
+    if (wheelNames.length) renderWheelLabels();
+  });
 
   $('#name-form').addEventListener('submit', async (e) => {
     e.preventDefault();
@@ -157,7 +196,15 @@
     disk.style.setProperty('--rot', wheelRot + 'deg');
     result.innerHTML = '<div class="name" style="opacity:.25;">…</div>';
     setTimeout(() => {
-      result.innerHTML = '<div class="name">' + escapeHtml(names[winner].textContent.replace(/×/g, '').trim()) + '</div>';
+      const w = names[winner];
+      const color = w.dataset.color || '';
+      result.innerHTML = '<div class="name">' + escapeHtml(w.textContent.replace(/×/g, '').trim()) + '</div>';
+      const el = result.querySelector('.name');
+      if (color) {
+        el.style.background = 'none';
+        el.style.webkitTextFillColor = color;
+        el.style.color = color;
+      }
       spinning = false;
     }, 3700);
   }
@@ -202,7 +249,10 @@
     coin.classList.add('flipping');
     coinResult.textContent = '…';
     setTimeout(() => {
-      coinResult.textContent = Math.random() < 0.5 ? 'Pile' : 'Face';
+      const isFace = Math.random() < 0.5;
+      coin.classList.toggle('is-face', isFace);
+      coinResult.textContent = isFace ? 'Face' : 'Pile';
+      coin.classList.remove('flipping');
     }, 1000);
   });
 

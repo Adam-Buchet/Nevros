@@ -372,9 +372,28 @@
     throw httpError('Requête inconnue', 404);
   }
 
+  var NAME_COLORS = ['#8b5cf6', '#f472b6', '#22d3ee', '#fbbf24', '#34d399', '#fb923c', '#a78bfa', '#f43f5e'];
+
+  function leastUsedColor(arr) {
+    var used = {};
+    arr.forEach(function (n) { if (n.color) used[n.color] = (used[n.color] || 0) + 1; });
+    var best = NAME_COLORS[0], bestCount = Infinity;
+    NAME_COLORS.forEach(function (c) {
+      var cnt = used[c] || 0;
+      if (cnt < bestCount) { bestCount = cnt; best = c; }
+    });
+    return best;
+  }
+
   function names(method, id, action, opts) {
     if (method === 'GET') {
-      return Promise.resolve(all('names'));
+      var arr = all('names');
+      var changed = false;
+      arr.forEach(function (n) {
+        if (!n.color) { n.color = leastUsedColor(arr); changed = true; }
+      });
+      if (changed) write('names', arr);
+      return Promise.resolve(arr);
     }
     if (method === 'POST' && !id) {
       var body = jsonBody(opts);
@@ -384,7 +403,7 @@
         return String(n.name).toLowerCase() === name.toLowerCase();
       })[0];
       if (dup) throw httpError('Ce prénom existe déjà', 409);
-      return Promise.resolve(insert('names', { name: name, created_at: Date.now() }));
+      return Promise.resolve(insert('names', { name: name, color: leastUsedColor(read('names', [])), created_at: Date.now() }));
     }
     if (method === 'DELETE' && id) {
       if (!remove('names', id)) throw httpError('Introuvable', 404);
@@ -419,12 +438,23 @@
   function votes(method, id, action, opts) {
     var my = sid();
     if (method === 'GET') {
-      return Promise.resolve(all('votes').map(function (v) {
+      var arr = all('votes');
+      var now = Date.now();
+      var changed = false;
+      arr.forEach(function (v) {
+        if (v.open && v.closes_at && now > v.closes_at) {
+          v.open = 0;
+          changed = true;
+        }
+      });
+      if (changed) write('votes', arr);
+      return Promise.resolve(arr.map(function (v) {
         var mine = (v.ballots || []).filter(function (b) { return b.sid === my; })[0];
         return {
           id: v.id, question: v.question, options: v.options || [],
           counts: v.counts || [], open: !!v.open, created_by: v.created_by,
-          created_at: v.created_at, myVote: mine ? mine.option : null
+          created_at: v.created_at, closes_at: v.closes_at || null,
+          myVote: mine ? mine.option : null
         };
       }));
     }
@@ -434,11 +464,14 @@
       var options = (Array.isArray(body.options) ? body.options : [])
         .map(function (o) { return String(o).trim(); }).filter(Boolean).slice(0, 8);
       var by = String(body.author || '').trim() || 'Anonyme';
+      var closes = Number(body.closes_at);
       if (!question) throw httpError('Question manquante');
       if (options.length < 2) throw httpError('Il faut au moins 2 options');
+      if (closes && !isFinite(closes)) throw httpError('Date de fin invalide');
+      var closesAt = closes > Date.now() ? closes : null;
       return Promise.resolve(insert('votes', {
         question: question, options: options, counts: options.map(function () { return 0; }),
-        ballots: [], open: 1, created_by: by, created_at: Date.now()
+        ballots: [], open: 1, created_by: by, created_at: Date.now(), closes_at: closesAt
       }));
     }
     if (method === 'POST' && id && action === 'vote') {
@@ -448,6 +481,10 @@
       var v = arr.filter(function (x) { return x.id === id; })[0];
       if (!v) throw httpError('Introuvable', 404);
       if (!v.open) throw httpError('Vote clos');
+      if (v.closes_at && Date.now() > v.closes_at) {
+        update('votes', id, function (x) { x.open = 0; return x; });
+        throw httpError('Vote clos');
+      }
       var options = v.options || [];
       if (!Number.isInteger(optionIndex) || optionIndex < 0 || optionIndex >= options.length) {
         throw httpError('Option invalide');

@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Atrocement Autiste — Connexion</title>
-<meta name="description" content="Espace privé du groupe. Mot de passe requis.">
+<title>Mentions légales — Atrocement Autiste</title>
+<meta name="description" content="Mentions légales du site privé du groupe.">
 <meta name="theme-color" content="#f8f8fa">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icons/logo.svg">
@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="css/themes.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-noauth data-no-smooth>
+<body>
 <div class="cursor-dot"></div>
 <div class="grid-fx"></div>
 <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
@@ -36,11 +36,7 @@
       </button>
       <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
         <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="navg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
-            </linearGradient>
-          </defs>
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
           <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
           <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
         </svg>
@@ -75,58 +71,103 @@
 <nav class="menu" id="menu" aria-label="Menu principal">
   <span class="menu-eyebrow">Navigation</span>
   <div class="menu-links">
-    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span><span class="grad">Accueil</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
     <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
     <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
     <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
     <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
     <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
     <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span>Sondages &amp; Votes</a></div>
-    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">08</span>Mentions légales</a></div>
+    <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">08</span><span class="grad">Mentions légales</span></a></div>
   </div>
   <div class="menu-foot">
     <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
   </div>
 </nav>
 
-<div class="login-stage">
-  <div class="login-wrap">
-    <div class="login-box">
-      <div class="login-brand" data-reveal>
-        <span class="login-logo" aria-hidden="true">
-          <svg viewBox="0 0 100 100" fill="none">
-            <defs>
-              <linearGradient id="loging" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
-              </linearGradient>
-            </defs>
-            <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#loging)"/>
-            <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
-          </svg>
-        </span>
-        <span class="login-brand-word">Atrocement&nbsp;Autiste</span>
-      </div>
-      <span class="login-badge" data-reveal style="--d:.06s"><span data-icon="lock"></span> Espace privé</span>
-      <h1 class="login-title" data-reveal style="--d:.1s">Reviens <span class="grad">nous voir</span></h1>
-      <p class="sub" data-reveal style="--d:.16s">
-        Espace privé du groupe — protégé par <span class="lock" data-icon="lock"></span> mot de passe
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">08</span> Le cadre légal</span>
+      <h1 class="h2" data-reveal>Mentions <span class="grad">légales</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        Les informations sur l'éditeur, l'hébergement et l'utilisation de ce site privé.
       </p>
-      <div class="login-err" id="login-err"></div>
-      <form id="login-form" autocomplete="off" data-reveal style="--d:.22s">
-        <div class="field">
-          <label for="password">Mot de passe</label>
-          <div class="pw-field">
-            <span class="pw-prefix" data-icon="lock"></span>
-            <input class="input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-            <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Afficher le mot de passe" data-icon="eye"></button>
-          </div>
-        </div>
-        <button class="btn" type="submit" id="login-submit" style="width:100%;" data-magnetic>Entrer dans le club <span data-icon="arrow"></span></button>
-      </form>
-      <p class="login-foot" data-reveal style="--d:.28s">Réservé aux membres du groupe. Le mot de passe ne peut être modifié que par l'admin.</p>
     </div>
-  </div>
-</div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="card legal-card" data-reveal>
+        <div class="legal-section">
+          <h3>Éditeur du site</h3>
+          <p>
+            Le site « Atrocement Autiste » est édité et géré par le groupe qui en est à l'origine.
+          </p>
+          <ul>
+            <li>Nom / pseudo de l'éditeur : <strong>[À compléter]</strong></li>
+            <li>Adresse : <strong>[À compléter]</strong></li>
+            <li>Contact : <strong>[À compléter]</strong></li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h3>Directeur de la publication</h3>
+          <p>
+            Le directeur de la publication est l'éditeur du site mentionné ci-dessus.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h3>Hébergement</h3>
+          <p>
+            Ce site est hébergé sur <strong>GitHub Pages</strong> (GitHub, Inc., 88 Colin P. Kelly Jr. Street, San Francisco, CA 94107, États-Unis). GitHub fournit la plateforme d'hébergement de sites statiques.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h3>Propriété intellectuelle</h3>
+          <p>
+            L'ensemble des contenus présents sur ce site (textes, images, vidéos, documents, logo, code) est la propriété du groupe, sauf mention contraire. Toute reproduction, diffusion ou utilisation sans autorisation préalable est interdite.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h3>Données personnelles</h3>
+          <p>
+            Ce site fonctionne sans compte ni serveur : les données (posts, photos, défis, pseudo, préférences) sont stockées <strong>uniquement dans le navigateur</strong> de chaque membre (localStorage et IndexedDB), sur son propre appareil. Aucune donnée n'est transmise à un serveur tiers, à l'exception de l'hébergement statique de la page.
+          </p>
+          <ul>
+            <li>Aucune collecte de données à des fins commerciales.</li>
+            <li>Chacun peut effacer les données du site en vidant les données de navigation (localStorage / IndexedDB).</li>
+          </ul>
+        </div>
+
+        <div class="legal-section">
+          <h3>Cookies</h3>
+          <p>
+            Le site n'utilise pas de cookies publicitaires ni de traceurs. Un jeton de session local (avec expiration) est conservé dans votre navigateur pour mémoriser votre connexion.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h3>Responsabilité</h3>
+          <p>
+            Le site est un espace privé réservé au groupe. L'éditeur ne saurait être tenu responsable des contenus publiés par les membres ni de l'usage fait du site. Les photos et souvenirs publiés doivent respecter le droit à l'image de chacun.
+          </p>
+        </div>
+
+        <div class="legal-section">
+          <h3>Contact</h3>
+          <p>
+            Pour toute question relative à ces mentions légales, contacte l'éditeur via : <strong>[À compléter]</strong>
+          </p>
+          <p class="muted">Dernière mise à jour : août 2026.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
   <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
@@ -140,6 +181,5 @@
 
 <script src="js/store.js"></script>
 <script src="js/app.js"></script>
-<script src="js/login.js"></script>
 </body>
 </html>

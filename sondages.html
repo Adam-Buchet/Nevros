@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Atrocement Autiste — Connexion</title>
-<meta name="description" content="Espace privé du groupe. Mot de passe requis.">
+<title>Sondages — Atrocement Autiste</title>
+<meta name="description" content="Les sondages du groupe : pose une question, on vote.">
 <meta name="theme-color" content="#f8f8fa">
 <link rel="manifest" href="manifest.json">
 <link rel="icon" type="image/svg+xml" href="icons/logo.svg">
@@ -21,7 +21,7 @@
 <link rel="stylesheet" href="css/themes.css">
 <link rel="stylesheet" href="css/styles.css">
 </head>
-<body data-noauth data-no-smooth>
+<body>
 <div class="cursor-dot"></div>
 <div class="grid-fx"></div>
 <div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
@@ -36,11 +36,7 @@
       </button>
       <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
         <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
-          <defs>
-            <linearGradient id="navg" x1="0" y1="0" x2="1" y2="1">
-              <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
-            </linearGradient>
-          </defs>
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
           <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
           <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
         </svg>
@@ -75,13 +71,13 @@
 <nav class="menu" id="menu" aria-label="Menu principal">
   <span class="menu-eyebrow">Navigation</span>
   <div class="menu-links">
-    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span><span class="grad">Accueil</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
     <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
     <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
     <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
     <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
     <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
-    <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span>Sondages &amp; Votes</a></div>
+    <div class="menu-item"><a class="menu-link" href="sondages.html"><span class="idx">07</span><span class="grad">Sondages</span></a></div>
     <div class="menu-item"><a class="menu-link" href="mentions.html"><span class="idx">08</span>Mentions légales</a></div>
   </div>
   <div class="menu-foot">
@@ -89,44 +85,60 @@
   </div>
 </nav>
 
-<div class="login-stage">
-  <div class="login-wrap">
-    <div class="login-box">
-      <div class="login-brand" data-reveal>
-        <span class="login-logo" aria-hidden="true">
-          <svg viewBox="0 0 100 100" fill="none">
-            <defs>
-              <linearGradient id="loging" x1="0" y1="0" x2="1" y2="1">
-                <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
-              </linearGradient>
-            </defs>
-            <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#loging)"/>
-            <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
-          </svg>
-        </span>
-        <span class="login-brand-word">Atrocement&nbsp;Autiste</span>
-      </div>
-      <span class="login-badge" data-reveal style="--d:.06s"><span data-icon="lock"></span> Espace privé</span>
-      <h1 class="login-title" data-reveal style="--d:.1s">Reviens <span class="grad">nous voir</span></h1>
-      <p class="sub" data-reveal style="--d:.16s">
-        Espace privé du groupe — protégé par <span class="lock" data-icon="lock"></span> mot de passe
+<main id="poll-root">
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">07</span> On tranche en groupe</span>
+      <h1 class="h2" data-reveal>Sondages du <span class="grad">groupe</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        Une question, deux options ou plus, et tout le monde vote. On règle les débats une bonne fois pour toutes.
       </p>
-      <div class="login-err" id="login-err"></div>
-      <form id="login-form" autocomplete="off" data-reveal style="--d:.22s">
-        <div class="field">
-          <label for="password">Mot de passe</label>
-          <div class="pw-field">
-            <span class="pw-prefix" data-icon="lock"></span>
-            <input class="input" type="password" id="password" name="password" placeholder="••••••••" autocomplete="current-password" required>
-            <button type="button" class="pw-toggle" id="pw-toggle" aria-label="Afficher le mot de passe" data-icon="eye"></button>
-          </div>
-        </div>
-        <button class="btn" type="submit" id="login-submit" style="width:100%;" data-magnetic>Entrer dans le club <span data-icon="arrow"></span></button>
-      </form>
-      <p class="login-foot" data-reveal style="--d:.28s">Réservé aux membres du groupe. Le mot de passe ne peut être modifié que par l'admin.</p>
     </div>
-  </div>
-</div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="card" data-reveal>
+        <form id="poll-form" class="grid" style="row-gap:14px;">
+          <div class="col-12">
+            <div class="field" style="margin:0;">
+              <label for="poll-question">Ta question</label>
+              <input class="input" type="text" id="poll-question" placeholder="Ex : Où on mange ce soir ?" maxlength="160">
+            </div>
+          </div>
+          <div class="col-12">
+            <label style="font-size:12px;font-weight:600;letter-spacing:.08em;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px;display:block;">Options (2 à 8)</label>
+            <div class="grid" id="poll-opts" style="row-gap:12px;"></div>
+            <div style="margin-top:10px; text-align:right;">
+              <button class="btn ghost sm" type="button" id="poll-addopt">+ option</button>
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="field" style="margin:0;">
+              <label for="poll-closes">Clôture automatique (optionnel)</label>
+              <input class="input" type="datetime-local" id="poll-closes">
+            </div>
+          </div>
+          <div class="col-6" style="display:flex; align-items:flex-end;">
+            <button class="btn" type="submit" style="margin:0; width:100%;" data-magnetic>Lancer le sondage <span data-icon="send"></span></button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <span class="section-kicker" data-reveal>Les votes en cours</span>
+      <h2 class="h2" data-reveal>Les <span class="grad">sondages</span></h2>
+      <div class="grid" id="poll-list" style="margin-top:36px;"></div>
+      <div class="empty" id="poll-empty" style="display:none;">
+        <div class="big">🗳️</div>
+        Aucun sondage pour l'instant. Lance le premier !
+      </div>
+    </div>
+  </section>
+</main>
 
 <footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
   <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
@@ -140,6 +152,6 @@
 
 <script src="js/store.js"></script>
 <script src="js/app.js"></script>
-<script src="js/login.js"></script>
+<script src="js/sondages.js"></script>
 </body>
 </html>
