@@ -1,0 +1,270 @@
+<!doctype html>
+<html lang="fr" data-theme="noir" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ludique &amp; Divertissement — Atrocement Autiste</title>
+<meta name="description" content="Roulette, dés, votes, playlist commune et autres gadgets du groupe.">
+<meta name="theme-color" content="#f8f8fa">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atrocement Autiste">
+<script>
+(function(){try{var t=localStorage.getItem('aa_theme')||'noir';var m=localStorage.getItem('aa_mode')||'light';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-mode',m);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="grid-fx"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="transition-overlay"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer le thème" aria-expanded="false">
+        <span class="icon-moon" data-icon="moon"></span>
+        <span class="icon-sun" data-icon="sun"></span>
+      </button>
+      <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
+          <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
+          <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+        </svg>
+      </a>
+    </div>
+    <a href="index.html" class="nav-center no-transition logo-word">Atrocement Autiste</a>
+    <button class="icon-btn burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="panel-backdrop" id="theme-backdrop"></div>
+<aside class="theme-panel" id="theme-panel" aria-label="Réglages du thème">
+  <div class="panel-head">
+    <span class="panel-logo" data-icon="sparkles"></span>
+    <h3>Apparence</h3>
+  </div>
+  <p>Choisis tes couleurs et ton mode (clair ou sombre).</p>
+  <div class="mode-switch">
+    <button data-mode="light"><span data-icon="sun"></span> Clair</button>
+    <button data-mode="dark"><span data-icon="moon"></span> Sombre</button>
+  </div>
+  <div class="theme-grid" id="theme-grid"></div>
+  <div class="nick-field">
+    <label for="nick-input">Ton pseudo</label>
+    <input class="input" type="text" id="nick-input" placeholder="Comment t'appelles-tu ?" autocomplete="off" maxlength="30">
+    <small>Utilisé pour signer tes posts, défis, etc.</small>
+  </div>
+</aside>
+
+<nav class="menu" id="menu" aria-label="Menu principal">
+  <span class="menu-eyebrow">Navigation</span>
+  <div class="menu-links">
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
+    <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
+    <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
+    <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
+    <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
+    <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span><span class="grad">Ludique &amp; Divertissement</span></a></div>
+  </div>
+  <div class="menu-foot">
+    <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">06</span> Boîte à outils du groupe</span>
+      <h1 class="h2" data-reveal>Ludique &amp; <span class="grad">Divertissement</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        Des petits outils pratiques et drôles pour trancher les débats, se décider et se marrer ensemble.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="grid">
+
+        <!-- PLAYLIST -->
+        <div class="card tool-card col-6" id="playlist" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="music"></span>
+            <h3>Playlist commune</h3>
+          </div>
+          <div class="tc-body">
+            <form id="pl-form" class="toolbar" style="margin-bottom:16px;">
+              <input class="input" type="text" id="pl-title" placeholder="Titre" style="min-width:140px;">
+              <input class="input" type="text" id="pl-artist" placeholder="Artiste" style="min-width:120px;">
+              <input class="input" type="url" id="pl-url" placeholder="Lien (YouTube…)" style="min-width:140px;">
+              <button class="btn sm" type="submit" style="margin:0;">Ajouter <span data-icon="plus"></span></button>
+            </form>
+            <div class="list" id="pl-list" style="max-height:360px; overflow-y:auto;" data-lenis-prevent></div>
+            <div class="empty" id="pl-empty" style="padding:22px;">
+              <div class="big">🎧</div>
+              La playlist est vide. Ajoute un son !
+            </div>
+          </div>
+        </div>
+
+        <!-- ROULETTE -->
+        <div class="card tool-card col-6" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="refresh"></span>
+            <h3>Roulette prénom</h3>
+          </div>
+          <div class="tc-body">
+            <div class="roulette" id="roulette">
+              <div class="disk" id="roulette-disk"></div>
+              <div class="pin"></div>
+              <div class="center" id="roulette-center"><span data-icon="dice"></span></div>
+            </div>
+            <div class="roulette-result" id="roulette-result"></div>
+            <form id="name-form" class="toolbar" style="margin-bottom:12px;">
+              <input class="input" type="text" id="name-input" placeholder="Ajouter un prénom">
+              <button class="btn sm" type="submit" style="margin:0;">+</button>
+            </form>
+            <div class="chips" id="name-chips"></div>
+          </div>
+        </div>
+
+        <!-- DE -->
+        <div class="card tool-card col-4" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="dice"></span>
+            <h3>Dé de hasard</h3>
+          </div>
+          <div class="tc-body">
+            <div class="dice-stage">
+              <div class="die" id="die">
+                <div class="pip"></div>
+              </div>
+            </div>
+            <div class="die-result" id="die-result">Clique pour lancer</div>
+            <button class="btn sm" id="die-btn" style="margin-top:12px;" data-magnetic>Lancer le dé</button>
+          </div>
+        </div>
+
+        <!-- PILE OU FACE -->
+        <div class="card tool-card col-4" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="sparkles"></span>
+            <h3>Pile ou face</h3>
+          </div>
+          <div class="tc-body">
+            <div class="dice-stage">
+              <div class="die" id="coin">
+                <div class="pip"></div>
+              </div>
+            </div>
+            <div class="die-result" id="coin-result">Qui commence ?</div>
+            <button class="btn sm" id="coin-btn" style="margin-top:12px;" data-magnetic>Lancer</button>
+          </div>
+        </div>
+
+        <!-- BALLE MAGIQUE -->
+        <div class="card tool-card col-4" data-reveal style="--d:.16s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="question"></span>
+            <h3>Balle magique 8</h3>
+          </div>
+          <div class="tc-body">
+            <div class="shake-ball" id="ball">
+              <div class="window" id="ball-answer">Pose ta question…</div>
+            </div>
+            <button class="btn sm" id="ball-btn" style="margin-top:12px;" data-magnetic>Secouer</button>
+          </div>
+        </div>
+
+        <!-- NOMBRE -->
+        <div class="card tool-card col-6" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="clock"></span>
+            <h3>Nombre aléatoire</h3>
+          </div>
+          <div class="tc-body">
+            <form id="num-form" class="toolbar" style="margin-bottom:14px;">
+              <input class="input" type="number" id="num-min" value="1" placeholder="Min" style="min-width:110px;">
+              <input class="input" type="number" id="num-max" value="100" placeholder="Max" style="min-width:110px;">
+              <button class="btn sm" type="submit" style="margin:0;">Go</button>
+            </form>
+            <div class="roulette-result"><div class="name" id="num-result">—</div></div>
+          </div>
+        </div>
+
+        <!-- LISTE DE COURSES -->
+        <div class="card tool-card col-6" data-reveal style="--d:.08s">
+          <div class="tc-head">
+            <span class="card-icon" data-icon="cart"></span>
+            <h3>Liste de courses</h3>
+          </div>
+          <div class="tc-body">
+            <form id="shop-form" class="toolbar" style="margin-bottom:16px;">
+              <input class="input" type="text" id="shop-input" placeholder="Ex : chips, glaçons…">
+              <button class="btn sm" type="submit" style="margin:0;">Ajouter <span data-icon="plus"></span></button>
+            </form>
+            <div class="list" id="shop-list" style="max-height:300px; overflow-y:auto;" data-lenis-prevent></div>
+            <div class="empty" id="shop-empty" style="padding:22px;">
+              <div class="big">🛒</div>
+              Rien à acheter. (C'est louche.)
+            </div>
+          </div>
+        </div>
+
+        <!-- VOTES -->
+        <div class="card tool-card col-12" data-reveal>
+          <div class="tc-head">
+            <span class="card-icon" data-icon="users"></span>
+            <h3>Vote du groupe</h3>
+          </div>
+          <div class="tc-body">
+            <form id="vote-form" class="card" style="background:var(--bg-soft); margin-bottom:24px;">
+              <div class="grid">
+                <div class="col-8">
+                  <div class="field" style="margin:0;"><label>Question</label><input class="input" id="vote-question" placeholder="Où on mange ce soir ?"></div>
+                </div>
+                <div class="col-4" style="display:flex; align-items:flex-end;">
+                  <button class="btn" type="submit" style="margin:0; width:100%;">Lancer le vote <span data-icon="send"></span></button>
+                </div>
+              </div>
+              <div id="vote-opts" class="grid" style="margin-top:16px; row-gap:12px;"></div>
+              <div style="margin-top:10px; text-align:right;">
+                <button class="btn ghost sm" type="button" id="vote-addopt">+ option</button>
+              </div>
+            </form>
+            <div class="grid" id="vote-list"></div>
+            <div class="empty" id="vote-empty">
+              <div class="big">🗳️</div>
+              Aucun vote en cours.
+            </div>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
+  <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+</footer>
+
+<div class="toasts"></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script src="js/ludique.js"></script>
+</body>
+</html>

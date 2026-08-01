@@ -1,0 +1,107 @@
+/* =========================================================
+   Thèmes — Atrocement Autiste
+   Tokens globaux + mode clair/sombre + 8 accents colorés.
+   ========================================================= */
+
+:root {
+  --font-display: 'Anton', 'Arial Black', 'Impact', sans-serif;
+  --font-body: 'Space Grotesk', system-ui, -apple-system, 'Segoe UI', sans-serif;
+  --font-mono: ui-monospace, 'Cascadia Code', 'JetBrains Mono', 'Fira Code', 'Space Grotesk', monospace;
+  --radius: 18px;
+  --radius-sm: 12px;
+  --radius-lg: 26px;
+  --maxw: 1180px;
+  --dur: .35s;
+  --ease: cubic-bezier(.22, 1, .36, 1);
+}
+
+/* ---------- CLAIR (défaut) ---------- */
+:root, :root[data-mode='light'] {
+  --bg: #f8f8fa;
+  --bg-soft: #f0f0f3;
+  --bg-card: #ffffff;
+  --bg-elev: #ffffff;
+  --text: #0e0e13;
+  --text-dim: #61666f;
+  --line: rgba(14, 14, 19, .09);
+  --line-strong: rgba(14, 14, 19, .18);
+  --accent1: #4f46e5;
+  --accent2: #7c3aed;
+  --glow: rgba(79, 70, 229, .15);
+  --overlay: rgba(250, 250, 252, .9);
+  --nav-bg: rgba(255, 255, 255, .72);
+  --glass: rgba(14, 14, 19, .04);
+  --shadow-sm: 0 1px 2px rgba(14, 14, 19, .05), 0 2px 8px rgba(14, 14, 19, .05);
+  --shadow: 0 12px 36px rgba(14, 14, 19, .09);
+  --shadow-lg: 0 36px 90px rgba(14, 14, 19, .15);
+  color-scheme: light;
+}
+
+/* ---------- SOMBRE ---------- */
+:root[data-mode='dark'] {
+  --bg: #0b0c12;
+  --bg-soft: #13141a;
+  --bg-card: rgba(255, 255, 255, .04);
+  --bg-elev: #15161d;
+  --text: #f3f4f8;
+  --text-dim: #9aa1ae;
+  --line: rgba(255, 255, 255, .09);
+  --line-strong: rgba(255, 255, 255, .2);
+  --accent1: #818cf8;
+  --accent2: #a78bfa;
+  --glow: rgba(129, 140, 248, .22);
+  --overlay: rgba(8, 9, 14, .92);
+  --nav-bg: rgba(11, 12, 18, .66);
+  --glass: rgba(255, 255, 255, .05);
+  --shadow-sm: 0 1px 2px rgba(0, 0, 0, .3), 0 2px 8px rgba(0, 0, 0, .3);
+  --shadow: 0 12px 36px rgba(0, 0, 0, .4);
+  --shadow-lg: 0 36px 90px rgba(0, 0, 0, .55);
+  color-scheme: dark;
+}
+
+/* ---------- ACCENTS (thèmes) ---------- */
+[data-theme='noir'] {
+  --accent1: #4f46e5;
+  --accent2: #7c3aed;
+  --glow: rgba(79, 70, 229, .16);
+}
+[data-theme='neon'] {
+  --accent1: #06b6d4;
+  --accent2: #e11d8f;
+  --glow: rgba(6, 182, 212, .16);
+}
+[data-theme='foret'] {
+  --accent1: #059669;
+  --accent2: #d97706;
+  --glow: rgba(5, 150, 105, .16);
+}
+[data-theme='ocean'] {
+  --accent1: #0ea5e9;
+  --accent2: #6366f1;
+  --glow: rgba(14, 165, 233, .16);
+}
+[data-theme='coucher'] {
+  --accent1: #f97316;
+  --accent2: #e11d48;
+  --glow: rgba(249, 115, 22, .16);
+}
+[data-theme='candy'] {
+  --accent1: #ec4899;
+  --accent2: #8b5cf6;
+  --glow: rgba(236, 72, 153, .16);
+}
+[data-theme='aurore'] {
+  --accent1: #65a30d;
+  --accent2: #0891b2;
+  --glow: rgba(101, 163, 13, .16);
+}
+[data-theme='mono'] {
+  --accent1: #6b7280;
+  --accent2: #9ca3af;
+  --glow: rgba(107, 114, 128, .16);
+}
+[data-theme='mono'][data-mode='light'] {
+  --accent1: #111827;
+  --accent2: #4b5563;
+  --glow: rgba(17, 24, 39, .14);
+}

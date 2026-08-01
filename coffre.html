@@ -1,0 +1,168 @@
+<!doctype html>
+<html lang="fr" data-theme="noir" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Coffre-fort — Atrocement Autiste</title>
+<meta name="description" content="Le coffre-fort du groupe.">
+<meta name="theme-color" content="#f8f8fa">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atrocement Autiste">
+<script>
+(function(){try{var t=localStorage.getItem('aa_theme')||'noir';var m=localStorage.getItem('aa_mode')||'light';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-mode',m);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="grid-fx"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="transition-overlay"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer le thème" aria-expanded="false">
+        <span class="icon-moon" data-icon="moon"></span>
+        <span class="icon-sun" data-icon="sun"></span>
+      </button>
+      <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
+          <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
+          <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+        </svg>
+      </a>
+    </div>
+    <a href="index.html" class="nav-center no-transition logo-word">Atrocement Autiste</a>
+    <button class="icon-btn burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="panel-backdrop" id="theme-backdrop"></div>
+<aside class="theme-panel" id="theme-panel" aria-label="Réglages du thème">
+  <div class="panel-head">
+    <span class="panel-logo" data-icon="sparkles"></span>
+    <h3>Apparence</h3>
+  </div>
+  <p>Choisis tes couleurs et ton mode (clair ou sombre).</p>
+  <div class="mode-switch">
+    <button data-mode="light"><span data-icon="sun"></span> Clair</button>
+    <button data-mode="dark"><span data-icon="moon"></span> Sombre</button>
+  </div>
+  <div class="theme-grid" id="theme-grid"></div>
+  <div class="nick-field">
+    <label for="nick-input">Ton pseudo</label>
+    <input class="input" type="text" id="nick-input" placeholder="Comment t'appelles-tu ?" autocomplete="off" maxlength="30">
+    <small>Utilisé pour signer tes posts, défis, etc.</small>
+  </div>
+</aside>
+
+<nav class="menu" id="menu" aria-label="Menu principal">
+  <span class="menu-eyebrow">Navigation</span>
+  <div class="menu-links">
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
+    <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
+    <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
+    <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
+    <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span><span class="grad">Coffre-fort</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
+  </div>
+  <div class="menu-foot">
+    <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">05</span> Top secret</span>
+      <h1 class="h2" data-reveal>Coffre-<span class="grad">fort</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        Nos liens précieux, nos notes secrètes, nos fichiers. Le coffre se reverrouille à chaque nouvelle visite.
+      </p>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+
+      <div class="login-box" id="vault-lock" style="margin:0 auto;">
+        <div class="login-logo" data-icon="lock"></div>
+        <h1 class="login-title" style="font-size:30px;">Coffre verrouillé</h1>
+        <p class="sub">Rentre le mot de passe du site pour déverrouiller.</p>
+        <div class="login-err" id="vault-err"></div>
+        <form id="vault-lock-form" autocomplete="off">
+          <div class="field">
+            <label for="vault-password">Mot de passe</label>
+            <input class="input" type="password" id="vault-password" placeholder="••••••••" autocomplete="current-password" required>
+          </div>
+          <button class="btn" type="submit" style="width:100%;" data-magnetic>Déverrouiller <span data-icon="unlock"></span></button>
+        </form>
+      </div>
+
+      <div id="vault-content" style="display:none;">
+        <div class="tabs" data-reveal>
+          <button class="tab active" data-tab="notes">Notes <span data-icon="note"></span></button>
+          <button class="tab" data-tab="links">Liens <span data-icon="link"></span></button>
+          <button class="tab" data-tab="files">Fichiers <span data-icon="file"></span></button>
+        </div>
+
+        <div class="tab-pane active" id="pane-notes" data-reveal>
+          <form class="card" id="note-form" style="margin-bottom:26px;">
+            <div class="field"><label for="note-title">Titre</label><input class="input" id="note-title" placeholder="Le mot du jour"></div>
+            <div class="field"><label for="note-content">Contenu</label><textarea class="textarea" id="note-content" placeholder="Écris ici…"></textarea></div>
+            <button class="btn sm" type="submit">Ajouter la note <span data-icon="plus"></span></button>
+          </form>
+          <div class="list" id="note-list"></div>
+        </div>
+
+        <div class="tab-pane" id="pane-links" data-reveal>
+          <form class="card" id="link-form" style="margin-bottom:26px;">
+            <div class="field"><label for="link-title">Nom</label><input class="input" id="link-title" placeholder="La réservation du karaoké"></div>
+            <div class="field"><label for="link-url">URL</label><input class="input" id="link-url" type="url" placeholder="https://…"></div>
+            <button class="btn sm" type="submit">Ajouter le lien <span data-icon="plus"></span></button>
+          </form>
+          <div class="list" id="link-list"></div>
+        </div>
+
+        <div class="tab-pane" id="pane-files" data-reveal>
+          <form class="card" id="file-form" style="margin-bottom:26px;">
+            <div class="toolbar">
+              <label class="btn ghost" for="file-upload" style="margin:0;">
+                <span data-icon="upload"></span> Choisir un fichier
+                <input type="file" id="file-upload" style="display:none;">
+              </label>
+              <input class="input" type="text" id="file-title" placeholder="Nom du fichier (optionnel)">
+              <button class="btn" type="submit">Stocker <span data-icon="lock"></span></button>
+            </div>
+          </form>
+          <div class="list" id="file-list"></div>
+        </div>
+      </div>
+
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
+  <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+</footer>
+
+<div class="toasts"></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script src="js/coffre.js"></script>
+</body>
+</html>

@@ -1,0 +1,315 @@
+<!doctype html>
+<html lang="fr" data-theme="noir" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Atrocement Autiste — L'espace du groupe</title>
+<meta name="description" content="Le site privé du groupe : archives, défis, actu, coffre-fort et jeux.">
+<meta name="theme-color" content="#f8f8fa">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atrocement Autiste">
+<script>
+(function(){try{var t=localStorage.getItem('aa_theme')||'noir';var m=localStorage.getItem('aa_mode')||'light';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-mode',m);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="grid-fx"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="transition-overlay"></div>
+
+<div id="intro" aria-hidden="true">
+  <div class="intro-inner">
+    <h1 id="intro-title"></h1>
+    <p id="intro-def"></p>
+  </div>
+</div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer le thème" aria-expanded="false">
+        <span class="icon-moon" data-icon="moon"></span>
+        <span class="icon-sun" data-icon="sun"></span>
+      </button>
+      <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <defs>
+            <linearGradient id="navg" x1="0" y1="0" x2="1" y2="1">
+              <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
+            </linearGradient>
+          </defs>
+          <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
+          <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+        </svg>
+      </a>
+    </div>
+    <a href="index.html" class="nav-center no-transition logo-word">Atrocement Autiste</a>
+    <button class="icon-btn burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="panel-backdrop" id="theme-backdrop"></div>
+<aside class="theme-panel" id="theme-panel" aria-label="Réglages du thème">
+  <div class="panel-head">
+    <span class="panel-logo" data-icon="sparkles"></span>
+    <h3>Apparence</h3>
+  </div>
+  <p>Choisis tes couleurs et ton mode (clair ou sombre).</p>
+  <div class="mode-switch">
+    <button data-mode="light"><span data-icon="sun"></span> Clair</button>
+    <button data-mode="dark"><span data-icon="moon"></span> Sombre</button>
+  </div>
+  <div class="theme-grid" id="theme-grid"></div>
+  <div class="nick-field">
+    <label for="nick-input">Ton pseudo</label>
+    <input class="input" type="text" id="nick-input" placeholder="Comment t'appelles-tu ?" autocomplete="off" maxlength="30">
+    <small>Utilisé pour signer tes posts, défis, etc.</small>
+  </div>
+</aside>
+
+<nav class="menu" id="menu" aria-label="Menu principal">
+  <span class="menu-eyebrow">Navigation</span>
+  <div class="menu-links">
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span><span class="grad">Accueil</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
+    <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span>Défis &amp; Vie de groupe</a></div>
+    <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
+    <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
+    <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
+  </div>
+  <div class="menu-foot">
+    <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="hero" id="hero">
+    <div class="container hero-inner">
+      <div class="hero-emblem" id="hero-logo-wrap" aria-hidden="true">
+        <div class="logo-badge" id="hero-logo">
+          <svg viewBox="0 0 100 100" fill="none">
+            <defs>
+              <linearGradient id="hgrad" x1="0" y1="0" x2="1" y2="1">
+                <stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/>
+              </linearGradient>
+            </defs>
+            <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#hgrad)"/>
+            <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+          </svg>
+        </div>
+      </div>
+
+      <span class="hero-kicker" data-reveal>Espace privé du groupe</span>
+      <h1 class="hero-title" aria-label="Atrocement Autiste">
+        <span class="line" data-reveal="clip">Atrocement</span>
+        <span class="line" data-reveal="clip" style="--d:.12s"><span class="grad">Autiste</span></span>
+      </h1>
+      <p class="hero-sub" data-reveal style="--d:.25s">
+        L'espace privé du groupe. Archives, défis, actu, trésor caché et jeux — tout est là, pour nous, rien que pour nous.
+      </p>
+      <div class="hero-cta" data-reveal style="--d:.35s">
+        <a class="btn" href="ludique.html" data-magnetic>Explorer <span data-icon="arrow"></span></a>
+        <a class="btn ghost" href="actualites.html">Fil d'actualité <span data-icon="send"></span></a>
+      </div>
+      <div class="hero-scroll" aria-hidden="true">
+        <span>Défiler</span>
+        <span class="mouse"></span>
+      </div>
+    </div>
+
+    <div class="container hero-visual" data-reveal style="--d:.4s">
+      <div class="code-card" aria-hidden="true">
+        <div class="code-head">
+          <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+          <span class="t">le-coin-a-nous.js</span>
+          <span class="code-status"><i></i> durable</span>
+        </div>
+        <div class="code-body">
+          <div class="ln"><span class="no">01</span><span><span class="pr">■</span> <span class="kw">const</span> groupe = <span class="fn">group.open</span>({ id: <span class="st">"le-coin-a-nous"</span> });</span></div>
+          <div class="ln"><span class="no">02</span><span></span></div>
+          <div class="ln"><span class="no">03</span><span><span class="cm">// nos souvenirs ne se perdent jamais</span></span></div>
+          <div class="ln"><span class="no">04</span><span><span class="kw">const</span> archives = <span class="kw">await</span> groupe.<span class="fn">run</span>(<span class="st">"sortir-les-archives"</span>, <span class="kw">async</span> () =&gt; {</span></div>
+          <div class="ln"><span class="no">05</span><span>&nbsp;&nbsp;<span class="kw">return</span> museum.<span class="fn">sort</span>({ qui: <span class="st">"@nous"</span>, humeur: <span class="st">"nostalgie"</span> });</span></div>
+          <div class="ln"><span class="no">06</span><span>});</span></div>
+          <div class="ln"><span class="no">07</span><span></span></div>
+          <div class="ln"><span class="no">08</span><span><span class="kw">const</span> defi = <span class="kw">await</span> groupe.<span class="fn">run</span>(<span class="st">"lancer-un-defi"</span>, () =&gt; {</span></div>
+          <div class="ln"><span class="no">09</span><span>&nbsp;&nbsp;<span class="kw">return</span> groupe.<span class="fn">crash</span>({ avec: <span class="st">"@toi"</span>, categorie: <span class="st">"impossible"</span> });</span></div>
+          <div class="ln"><span class="no">10</span><span>});</span></div>
+          <div class="ln"><span class="no">11</span><span></span></div>
+          <div class="ln"><span class="no">12</span><span><span class="kw">await</span> groupe.<span class="fn">vote</span>({ theme: <span class="st">"playlist"</span>, note: <span class="st">"🤘"</span> });</span></div>
+          <div class="ln"><span class="no">13</span><span></span></div>
+          <div class="ln"><span class="no">14</span><span><span class="kw">return</span> { etat: <span class="st">"increvable"</span>, amour: <span class="pn">Infinity</span> };<span class="caret-line"></span></span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <div class="marquee" aria-hidden="true">
+    <div class="marquee-track" id="marquee-track"></div>
+  </div>
+
+  <section class="section">
+    <div class="container">
+      <span class="section-kicker" data-reveal>Le coin à nous</span>
+      <h2 class="h2" data-reveal>Qu'est-ce qu'on <span class="grad">trouve ici ?</span></h2>
+      <p class="lead" data-reveal style="--d:.1s">
+        Six espaces pensés pour le groupe : garder nos souvenirs, se lancer des défis, suivre l'actu, cacher nos trésors et se marrer.
+      </p>
+
+      <div class="grid" style="margin-top:50px;">
+        <a class="card col-3 hover-accent" href="archives.html" data-reveal>
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="film"></span>
+          <h3>Archives &amp; Nostalgie</h3>
+          <p>Les photos, les souvenirs, les "tu te souviens quand…". Le musée du groupe.</p>
+        </a>
+        <a class="card col-3 hover-accent" href="defis.html" data-reveal style="--d:.08s">
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="trophy"></span>
+          <h3>Défis &amp; Vie de groupe</h3>
+          <p>Des défis à se lancer, des choses à accomplir ensemble. Chacun son tour.</p>
+        </a>
+        <a class="card col-3 hover-accent" href="actualites.html" data-reveal style="--d:.16s">
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="users"></span>
+          <h3>Fil d'actualité</h3>
+          <p>Les annonces, les sorties, les nouvelles de tout le monde. Toujours à jour.</p>
+        </a>
+        <a class="card col-3 hover-accent" href="coffre.html" data-reveal>
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="lock"></span>
+          <h3>Coffre-fort</h3>
+          <p>Le trésor du groupe : liens, notes secrètes, fichiers. Bien planqué, promis.</p>
+        </a>
+        <a class="card col-3 hover-accent" href="ludique.html" data-reveal style="--d:.08s">
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="dice"></span>
+          <h3>Ludique &amp; Divertissement</h3>
+          <p>Roulette, dé, balles magiques, votes… et la playlist commune.</p>
+        </a>
+        <a class="card col-3 hover-accent" href="ludique.html#playlist" data-reveal style="--d:.16s">
+          <span class="arrow" data-icon="arrow"></span>
+          <span class="card-icon" data-icon="music"></span>
+          <h3>Playlist commune</h3>
+          <p>Chacun ajoute ses sons, on vote pour les meilleurs. Le son du groupe.</p>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="grid">
+        <div class="col-5" data-reveal>
+          <span class="section-kicker">Le principe</span>
+          <h2 class="h2" style="font-size:clamp(34px,5.5vw,62px);">Simple, fluide, <span class="grad">fait pour nous</span></h2>
+          <p class="lead" style="margin-top:20px;">
+            Un seul mot de passe pour tout le groupe, des pages rapides qui répondent sur mobile comme sur ordi, et des couleurs que chacun règle à sa sauce.
+          </p>
+          <div class="points">
+            <div class="point">
+              <span class="tick" data-icon="check"></span>
+              <div><strong>Ça marche partout</strong><span>Ordinateur, téléphone, même hors connexion.</span></div>
+            </div>
+            <div class="point">
+              <span class="tick" data-icon="check"></span>
+              <div><strong>Installe-le comme une appli</strong><span>Un clic et le site vit sur ton écran d'accueil.</span></div>
+            </div>
+            <div class="point">
+              <span class="tick" data-icon="check"></span>
+              <div><strong>À ton goût</strong><span>Couleurs, mode clair ou sombre, chacun sa sauce.</span></div>
+            </div>
+          </div>
+          <a class="btn ghost" href="coffre.html" style="margin-top:26px;" data-magnetic>Découvrir le coffre <span data-icon="lock"></span></a>
+        </div>
+        <div class="col-7" data-reveal style="--d:.15s">
+          <div class="code-card" aria-hidden="true">
+            <div class="code-head">
+              <span class="dot r"></span><span class="dot y"></span><span class="dot g"></span>
+              <span class="t">install.sh</span>
+              <span class="code-status"><i></i> prêt</span>
+            </div>
+            <div class="code-body">
+              <div class="ln"><span class="no">01</span><span>$ <span class="fn">install</span> --site <span class="st">"atrocement-autiste"</span></span></div>
+              <div class="ln"><span class="no">02</span><span><span class="cm"># 6 espaces · 1 mot de passe · 0 pitié</span></span></div>
+              <div class="ln"><span class="no">03</span><span><span class="kw">✓</span> archives <span class="kw">✓</span> defis <span class="kw">✓</span> actu</span></div>
+              <div class="ln"><span class="no">04</span><span><span class="kw">✓</span> coffre-fort <span class="kw">✓</span> ludique <span class="kw">✓</span> playlist</span></div>
+              <div class="ln"><span class="no">05</span><span></span></div>
+              <div class="ln"><span class="no">06</span><span>Status : <span class="st">"increvable"</span> — <span class="pn">Infinity</span> fous rires<span class="caret-line"></span></span></div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <span class="section-kicker" data-reveal>En 3 étapes</span>
+      <h2 class="h2" data-reveal>Comment ça <span class="grad">marche</span></h2>
+
+      <div class="steps" style="margin-top:46px;">
+        <div class="step" data-reveal>
+          <span class="no">01</span>
+          <h3>Connecte-toi</h3>
+          <p>Un seul mot de passe pour tout le groupe. Personne d'autre n'entre.</p>
+        </div>
+        <div class="step" data-reveal style="--d:.1s">
+          <span class="no">02</span>
+          <h3>Explore</h3>
+          <p>Archives, défis, actu, coffre et jeux — chacun son espace, tout rangé proprement.</p>
+        </div>
+        <div class="step" data-reveal style="--d:.2s">
+          <span class="no">03</span>
+          <h3>Installe</h3>
+          <p>Ajoute le site à ton écran d'accueil. Ça marche même sans réseau.</p>
+        </div>
+      </div>
+
+      <div class="badges" style="margin-top:44px;" data-reveal>
+        <span class="badge"><span data-icon="lock"></span> 1 mot de passe</span>
+        <span class="badge"><span data-icon="download"></span> Offline ready</span>
+        <span class="badge"><span data-icon="heart"></span> ∞ fous rires</span>
+        <span class="badge"><span data-icon="sparkles"></span> 0 bug (on croise les doigts)</span>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:0;">
+    <div class="container">
+      <div class="cta-card" data-reveal>
+        <span class="section-kicker cta-kicker" style="color:rgba(255,255,255,.85);">Prêt ?</span>
+        <h2 class="h2">La bande <span class="grad-light">reprend</span> la main</h2>
+        <p class="lead">
+          Ouvre la boîte à outils du groupe : roulette, dés, votes, playlist… et le reste.
+        </p>
+        <div class="hero-cta">
+          <a class="btn" href="ludique.html" data-magnetic>Ouvrir la boîte à outils <span data-icon="arrow"></span></a>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
+  <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+</footer>
+
+<div class="toasts"></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+</body>
+</html>

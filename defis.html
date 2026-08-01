@@ -1,0 +1,132 @@
+<!doctype html>
+<html lang="fr" data-theme="noir" data-mode="light">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Défis &amp; Vie de groupe — Atrocement Autiste</title>
+<meta name="description" content="Les défis à relever ensemble.">
+<meta name="theme-color" content="#f8f8fa">
+<link rel="manifest" href="manifest.json">
+<link rel="icon" type="image/svg+xml" href="icons/logo.svg">
+<link rel="icon" type="image/png" sizes="32x32" href="icons/icon-32.png">
+<link rel="apple-touch-icon" href="icons/apple-touch-icon.png">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="Atrocement Autiste">
+<script>
+(function(){try{var t=localStorage.getItem('aa_theme')||'noir';var m=localStorage.getItem('aa_mode')||'light';var d=document.documentElement;d.setAttribute('data-theme',t);d.setAttribute('data-mode',m);}catch(e){}})();
+</script>
+<link rel="stylesheet" href="fonts/fonts.css">
+<link rel="stylesheet" href="css/themes.css">
+<link rel="stylesheet" href="css/styles.css">
+</head>
+<body>
+<div class="cursor-dot"></div>
+<div class="grid-fx"></div>
+<div class="blobs"><div class="blob b1"></div><div class="blob b2"></div><div class="blob b3"></div></div>
+<div class="transition-overlay"></div>
+
+<header class="nav">
+  <div class="nav-inner">
+    <div class="nav-left">
+      <button class="icon-btn" id="theme-btn" aria-label="Changer le thème" aria-expanded="false">
+        <span class="icon-moon" data-icon="moon"></span>
+        <span class="icon-sun" data-icon="sun"></span>
+      </button>
+      <a href="index.html" class="no-transition logo-mark" aria-label="Accueil">
+        <svg viewBox="0 0 100 100" fill="none" aria-hidden="true">
+          <defs><linearGradient id="navg" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="var(--accent1)"/><stop offset="1" stop-color="var(--accent2)"/></linearGradient></defs>
+          <rect x="4" y="4" width="92" height="92" rx="24" fill="url(#navg)"/>
+          <path d="M 50 50 C 50 32 26 32 26 50 C 26 68 50 68 50 50 C 50 32 74 32 74 50 C 74 68 50 68 50 50 Z" fill="#fff"/>
+        </svg>
+      </a>
+    </div>
+    <a href="index.html" class="nav-center no-transition logo-word">Atrocement Autiste</a>
+    <button class="icon-btn burger" id="burger-btn" aria-label="Ouvrir le menu" aria-expanded="false">
+      <span class="bars"><span class="bar"></span><span class="bar"></span><span class="bar"></span></span>
+    </button>
+  </div>
+</header>
+
+<div class="panel-backdrop" id="theme-backdrop"></div>
+<aside class="theme-panel" id="theme-panel" aria-label="Réglages du thème">
+  <div class="panel-head">
+    <span class="panel-logo" data-icon="sparkles"></span>
+    <h3>Apparence</h3>
+  </div>
+  <p>Choisis tes couleurs et ton mode (clair ou sombre).</p>
+  <div class="mode-switch">
+    <button data-mode="light"><span data-icon="sun"></span> Clair</button>
+    <button data-mode="dark"><span data-icon="moon"></span> Sombre</button>
+  </div>
+  <div class="theme-grid" id="theme-grid"></div>
+  <div class="nick-field">
+    <label for="nick-input">Ton pseudo</label>
+    <input class="input" type="text" id="nick-input" placeholder="Comment t'appelles-tu ?" autocomplete="off" maxlength="30">
+    <small>Utilisé pour signer tes posts, défis, etc.</small>
+  </div>
+</aside>
+
+<nav class="menu" id="menu" aria-label="Menu principal">
+  <span class="menu-eyebrow">Navigation</span>
+  <div class="menu-links">
+    <div class="menu-item"><a class="menu-link" href="index.html"><span class="idx">01</span>Accueil</a></div>
+    <div class="menu-item"><a class="menu-link" href="archives.html"><span class="idx">02</span>Archives &amp; Nostalgie</a></div>
+    <div class="menu-item"><a class="menu-link" href="defis.html"><span class="idx">03</span><span class="grad">Défis &amp; Vie de groupe</span></a></div>
+    <div class="menu-item"><a class="menu-link" href="actualites.html"><span class="idx">04</span>Fil d'actualité</a></div>
+    <div class="menu-item"><a class="menu-link" href="coffre.html"><span class="idx">05</span>Coffre-fort</a></div>
+    <div class="menu-item"><a class="menu-link" href="ludique.html"><span class="idx">06</span>Ludique &amp; Divertissement</a></div>
+  </div>
+  <div class="menu-foot">
+    <button class="btn sm" id="logout-btn">Se déconnecter <span data-icon="arrow"></span></button>
+  </div>
+</nav>
+
+<main>
+  <section class="page-head">
+    <div class="container">
+      <span class="section-kicker" data-reveal><span class="kicker-index">03</span> À la vie à la mort</span>
+      <h1 class="h2" data-reveal>Défis &amp; <span class="grad">Vie de groupe</span></h1>
+      <p class="lead" data-reveal style="--d:.12s">
+        On propose, on relève, on coche. Les défis peuvent être nuls, c'est justement le but.
+      </p>
+      <div class="toolbar" data-reveal style="--d:.2s; margin-top:28px;">
+        <input class="input" type="text" id="defi-text" placeholder="Ex : manger 10 tacos d'affilée sans vomir">
+        <button class="btn" id="defi-add" data-magnetic>Ajouter le défi <span data-icon="plus"></span></button>
+      </div>
+    </div>
+  </section>
+
+  <section class="section" style="padding-top:10px;">
+    <div class="container">
+      <div class="grid" style="margin-bottom:30px;">
+        <div class="col-6 card stat-card" data-reveal>
+          <span class="stat-value" id="stat-open">0</span>
+          <span class="stat-label">défis en attente</span>
+        </div>
+        <div class="col-6 card stat-card" data-reveal style="--d:.08s">
+          <span class="stat-value" id="stat-done">0</span>
+          <span class="stat-label">défis accomplis <span id="stat-done-by"></span></span>
+        </div>
+      </div>
+      <div class="list" id="defi-list"></div>
+      <div class="empty" id="defi-empty" style="display:none;">
+        <div class="big">🏆</div>
+        Aucun défi pour l'instant. Lance-toi !
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer style="border-top:1px solid var(--line); padding:34px clamp(18px,4vw,44px); text-align:center; color:var(--text-dim); font-size:13px;">
+  <p>Atrocement Autiste — fait par le groupe, pour le groupe. © 2026</p>
+</footer>
+
+<div class="toasts"></div>
+
+<script src="js/store.js"></script>
+<script src="js/app.js"></script>
+<script src="js/defis.js"></script>
+</body>
+</html>
