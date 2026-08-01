@@ -334,14 +334,19 @@
       { lang: '中文', text: '极其自闭' }
     ];
 
+    const lineEl = title.querySelector('.type-line');
+    const show = () => { if (lineEl) lineEl.classList.add('revealed'); };
+
     if (matchMedia('(prefers-reduced-motion: reduce)').matches) {
       textEl.textContent = TITLES[0].text;
       title.setAttribute('aria-label', TITLES[0].text);
+      show();
       return;
     }
 
     let idx = 0;
     const sleep = (ms) => new Promise((r) => setTimeout(r, ms));
+    const timeout = (ms) => new Promise((r) => setTimeout(r, ms));
 
     const applyFont = () => {
       const wrap = title.closest('.container');
@@ -375,23 +380,32 @@
       }
     };
 
+    show();
+
     (async () => {
       try {
         if (document.fonts && document.fonts.ready) {
-          await document.fonts.ready;
-          await document.fonts.load('400 190px Anton');
+          await Promise.race([document.fonts.ready, timeout(2500)]);
+          await Promise.race([document.fonts.load('400 190px Anton'), timeout(2500)]);
         }
       } catch (e) {}
       applyFont();
+      show();
       await sleep(700);
       textEl.textContent = '';
-      while (true) {
-        const item = TITLES[idx % TITLES.length];
-        await type(item.text);
-        await sleep(1600);
-        await erase(item.text);
-        await sleep(550);
-        idx++;
+      try {
+        while (true) {
+          const item = TITLES[idx % TITLES.length];
+          await type(item.text);
+          await sleep(1600);
+          await erase(item.text);
+          await sleep(550);
+          idx++;
+        }
+      } catch (e) {
+        textEl.textContent = TITLES[0].text;
+        title.setAttribute('aria-label', TITLES[0].text);
+        show();
       }
     })();
   }

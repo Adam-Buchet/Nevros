@@ -1,8 +1,8 @@
 /* Service worker — Atrocement Autiste (version statique, chemins relatifs) */
 
 const CACHE_PREFIX = 'aa-';
-const CORE_CACHE = CACHE_PREFIX + 'core-v5';
-const RUNTIME_CACHE = CACHE_PREFIX + 'runtime-v5';
+const CORE_CACHE = CACHE_PREFIX + 'core-v6';
+const RUNTIME_CACHE = CACHE_PREFIX + 'runtime-v6';
 
 const PRECACHE = [
   './',
